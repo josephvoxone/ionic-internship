@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 defineProps({
-  name: Array,
+  name: String,
 });
 </script>
 

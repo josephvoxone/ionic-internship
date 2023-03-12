@@ -9,7 +9,7 @@
         </ion-tab-button>
 
         <ion-tab-button tab="tab2" href="/tabs/tab2">
-          <ion-icon aria-hidden="true" :icon="ellipse" />
+          <ion-icon aria-hidden="true" :icon="square" />
           <ion-label>History</ion-label>
         </ion-tab-button>
 

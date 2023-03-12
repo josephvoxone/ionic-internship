@@ -11,7 +11,14 @@
           <ion-title size="large">Tab 1</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-searchbar placeholder="Search" color="light"></ion-searchbar>
+      <ion-tab-bar>
+        <ion-searchbar placeholder="Search" color="light"></ion-searchbar>
+        <ion-tab-button tab="tabqr" href="">
+          <img src="public/assets/icon/scan.png" alt="">
+          <ion-icon aria-hidden="false" />
+          <ion-label></ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
 
       <!-- CATEGORY SEGMENT START -->
       <ion-segment value="buttons">
@@ -66,7 +73,7 @@
               <p>ID : 03</p>
               <p>Type : Open House</p>
             </ion-label>
-            <ion-button shape="round"> Detail </ion-button>
+            <ion-button shape="round" href=""> Detail </ion-button>
           </ion-item>
         </ion-card-content>
       </ion-card>
@@ -154,6 +161,8 @@
           </ion-item>
         </ion-card-content>
       </ion-card>
+      <!-- CARD END -->
+
     </ion-content>
   </ion-page>
 </template>

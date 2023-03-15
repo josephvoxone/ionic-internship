@@ -13,10 +13,10 @@
       </ion-header>
       <ion-list inset="true">
         <ion-item>
-          <ion-label onclick="">Change Profile</ion-label>
+          <ion-label @click="$router.push('/change-name')">Change Name</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Change Password</ion-label>
+          <ion-label @click="$router.push('/change-password')">Change Password</ion-label>
         </ion-item>
         <ion-item>
           <ion-label>Log Out</ion-label>
@@ -27,6 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 </script>

@@ -3,36 +3,41 @@
     <ion-header>
       <ion-toolbar>
         <ion-title class="ion-text-center">Kandang</ion-title>
+        <ion-buttons slot="secondary" @click="$router.push('/scan-barcode')">
+          <!-- <ion-button @click="gotoBarcode()">           -->
+            <ion-button>
+            <ion-icon :icon="scan"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-searchbar placeholder="Search" color="light" mode="ios"></ion-searchbar>
+      </ion-toolbar>
+      <ion-toolbar>
+        <ion-segment value="buttons">
+          <ion-segment-button value="default">
+            <ion-label>Name</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="segment">
+            <ion-label>ID</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="buttons">
+            <ion-label>Type</ion-label>
+          </ion-segment-button>
+        </ion-segment>
       </ion-toolbar>
     </ion-header>
+
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Tab 1</ion-title>
-        </ion-toolbar>
-      </ion-header>
       <ion-tab-bar>
-        <ion-searchbar placeholder="Search" color="light"></ion-searchbar>
         <ion-tab-button tab="tabqr" href="">
-          <img src="public/assets/icon/scan.png" alt="">
-          <ion-icon aria-hidden="false" />
+          <!-- <img src="public/assets/icon/scan.png" alt="">
+          <ion-icon aria-hidden="false" /> -->
           <ion-label></ion-label>
         </ion-tab-button>
       </ion-tab-bar>
 
-      <!-- CATEGORY SEGMENT START -->
-      <ion-segment value="buttons">
-        <ion-segment-button value="default">
-          <ion-label>Name</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="segment">
-          <ion-label>ID</ion-label>
-        </ion-segment-button>
-        <ion-segment-button value="buttons">
-          <ion-label>Type</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-      <!-- CATEGORY SEGMENT END -->
+
 
       <!-- CARD START -->
       <ion-card>
@@ -167,7 +172,30 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/vue';
+<script lang="ts">
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonSearchbar, IonLabel, IonSegmentButton, IonSegment, IonTabBar, IonTabButton, IonThumbnail, IonItem, IonCardContent, IonCard, useIonRouter } from '@ionic/vue';
+import { scan } from 'ionicons/icons'
 import ExploreContainer from '@/components/ExploreContainer.vue';
+import { defineComponent, ref } from 'vue';
+
+export default defineComponent({
+    name: "ScanBarcodePage",
+    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
+    setup() {
+        const ionRouter=useIonRouter()
+        return {
+            // icons
+            scan,
+            // router
+            ionRouter
+        }
+    },
+    methods: {
+      gotoBarcode(){
+        console.log("ScanBarcode")
+
+        this.ionRouter.navigate({ path: '/scan-barcode' }, 'forward')
+      }
+    },
+})
 </script>

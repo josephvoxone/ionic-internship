@@ -5,7 +5,7 @@
         <ion-title class="ion-text-center">Kandang</ion-title>
         <ion-buttons slot="secondary" @click="$router.push('/scan-barcode')">
           <!-- <ion-button @click="gotoBarcode()">           -->
-            <ion-button>
+          <ion-button>
             <ion-icon :icon="scan"></ion-icon>
           </ion-button>
         </ion-buttons>
@@ -78,7 +78,7 @@
               <p>ID : 03</p>
               <p>Type : Open House</p>
             </ion-label>
-            <ion-button shape="round" href=""> Detail </ion-button>
+            <ion-button shape="round" @click="$router.push('/detail')"> Detail </ion-button>
           </ion-item>
         </ion-card-content>
       </ion-card>
@@ -179,23 +179,23 @@ import ExploreContainer from '@/components/ExploreContainer.vue';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-    name: "ScanBarcodePage",
-    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
-    setup() {
-        const ionRouter=useIonRouter()
-        return {
-            // icons
-            scan,
-            // router
-            ionRouter
-        }
-    },
-    methods: {
-      gotoBarcode(){
-        console.log("ScanBarcode")
+  name: "ScanBarcodePage",
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
+  setup() {
+    const ionRouter = useIonRouter()
+    return {
+      // icons
+      scan,
+      // router
+      ionRouter
+    }
+  },
+  methods: {
+    gotoBarcode() {
+      console.log("ScanBarcode")
 
-        this.ionRouter.navigate({ path: '/scan-barcode' }, 'forward')
-      }
-    },
+      this.ionRouter.navigate({ path: '/scan-barcode' }, 'forward')
+    }
+  },
 })
 </script>

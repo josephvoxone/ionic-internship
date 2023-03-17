@@ -8,17 +8,20 @@
                 <ion-title class="ion-text-center">Change Name</ion-title>
             </ion-toolbar>
         </ion-header>
+        <!-- <ion-label @click="presentAlert">Click Me</ion-label> -->
         <ion-content :fullscreen="true">
         </ion-content>
     </ion-page>
 </template>
 
 <script  lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton,IonSearchbar } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
+import { alertController } from '@ionic/vue';
+
 export default defineComponent({
     name: "ChangeNamePage",
-    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton,IonSearchbar },
+    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar },
     setup() {
         const formatViewers = (viewers: number) => {
             if (viewers > 100000) {

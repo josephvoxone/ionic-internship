@@ -29,144 +29,33 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-tab-bar>
-        <ion-tab-button tab="tabqr" href="">
-          <!-- <img src="public/assets/icon/scan.png" alt="">
-          <ion-icon aria-hidden="false" /> -->
-          <ion-label></ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-
-
-
-      <!-- CARD START -->
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Seli Mitra Rahayu
-              <p>ID : 01</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
+      <ion-card mode="ios" class="ion-padding-vertical">
+        <ion-item detail @click="$router.push('/detail')" v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
+          <ion-thumbnail slot="start">
+            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+          </ion-thumbnail>
+          <ion-label>
+            <h2>
+              Aria Mitra Sejati
+            </h2>
+            <p>ID : 03</p>
+          </ion-label>
+          <ion-chip slot="end" color="success">
+            Open House
+          </ion-chip>
+        </ion-item>
       </ion-card>
 
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Gusri Mitra Yolit
-              <p>ID : 02</p>
-              <p>Type : Open House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Aria Mitra Sejati
-              <p>ID : 03</p>
-              <p>Type : Open House</p>
-            </ion-label>
-            <ion-button shape="round" @click="$router.push('/detail')"> Detail </ion-button>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Seli Mitra Rahayu
-              <p>ID : 04</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Gusri Mitra Yolit
-              <p>ID : 05</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Aria Mitra Sejati
-              <p>ID : 06</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Seli Mitra Rahayu
-              <p>ID : 07</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Gusri Mitra Yolit
-              <p>ID : 08</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-
-      <ion-card>
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-            </ion-thumbnail>
-            <ion-label>Aria Mitra Sejati
-              <p>ID : 09</p>
-              <p>Type : Close House</p>
-            </ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <!-- CARD END -->
+      <template>
+        <div>
+          <template v-if="segment === 'detail'">
+            <!-- some detail content -->
+          </template>
+          <template v-else>
+            <!-- some other content -->
+          </template>
+        </div>
+      </template>
 
     </ion-content>
   </ion-page>
@@ -182,8 +71,10 @@ export default defineComponent({
   name: "ScanBarcodePage",
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
   setup() {
+    const segment = ref('detail');
     const ionRouter = useIonRouter()
     return {
+      segment,
       // icons
       scan,
       // router

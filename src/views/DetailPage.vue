@@ -7,16 +7,19 @@
                 </ion-buttons>
                 <ion-title class="ion-text-center">Detail</ion-title>
             </ion-toolbar>
+            <ion-toolbar>
+                <ion-segment value="default" mode="ios">
+                    <ion-segment-button value="default">
+                        <ion-label>Detail</ion-label>
+                    </ion-segment-button>
+                    <ion-segment-button value="segment">
+                        <ion-label>Report</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-toolbar>
         </ion-header>
+        
         <ion-content :fullscreen="true">
-            <ion-segment value="default" mode="ios">
-                <ion-segment-button value="default">
-                    <ion-label>Detail</ion-label>
-                </ion-segment-button>
-                <ion-segment-button value="segment">
-                    <ion-label>Report</ion-label>
-                </ion-segment-button>
-            </ion-segment>
             <ion-list :inset="true">
                 <ion-item>
                     <ion-label position="stacked">Reason</ion-label>
@@ -41,7 +44,7 @@
                     <ion-input placeholder="Enter text"></ion-input>
                 </ion-item>
             </ion-list>
-            <ion-button fill="outline" shape="round">Submit</ion-button>
+            <ion-button fill="outline" shape="round" expand="full">Submit</ion-button>
         </ion-content>
     </ion-page>
 </template>

@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>History</ion-title>
+        <ion-title class="ion-text-center">History</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">

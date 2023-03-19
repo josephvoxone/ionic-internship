@@ -14,7 +14,7 @@
         <ion-searchbar placeholder="Search" color="light" mode="ios"></ion-searchbar>
       </ion-toolbar>
       <ion-toolbar>
-        <ion-segment value="buttons">
+        <ion-segment value="buttons" mode="ios">
           <ion-segment-button value="default">
             <ion-label>Name</ion-label>
           </ion-segment-button>
@@ -30,7 +30,8 @@
 
     <ion-content :fullscreen="true">
       <ion-card mode="ios" class="ion-padding-vertical">
-        <ion-item detail @click="$router.push('/detail')" v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
+        <ion-item mode="ios" detail @click="$router.push('/detail')" v-for="(item, index) in [1, 2, 3, 4, 5]"
+          :key="index">
           <ion-thumbnail slot="start">
             <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
           </ion-thumbnail>
@@ -45,18 +46,6 @@
           </ion-chip>
         </ion-item>
       </ion-card>
-
-      <template>
-        <div>
-          <template v-if="segment === 'detail'">
-            <!-- some detail content -->
-          </template>
-          <template v-else>
-            <!-- some other content -->
-          </template>
-        </div>
-      </template>
-
     </ion-content>
   </ion-page>
 </template>
@@ -71,10 +60,8 @@ export default defineComponent({
   name: "ScanBarcodePage",
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
   setup() {
-    const segment = ref('detail');
     const ionRouter = useIonRouter()
     return {
-      segment,
       // icons
       scan,
       // router

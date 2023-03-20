@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="success">
         <ion-title class="ion-text-center">Kandang</ion-title>
         <ion-buttons slot="secondary" @click="$router.push('/scan-barcode')">
           <!-- <ion-button @click="gotoBarcode()">           -->
@@ -55,7 +55,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButto
 import { scan } from 'ionicons/icons'
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import { defineComponent, ref } from 'vue';
-
 export default defineComponent({
   name: "ScanBarcodePage",
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonItem, IonLabel },
@@ -71,7 +70,6 @@ export default defineComponent({
   methods: {
     gotoBarcode() {
       console.log("ScanBarcode")
-
       this.ionRouter.navigate({ path: '/scan-barcode' }, 'forward')
     }
   },

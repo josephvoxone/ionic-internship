@@ -2,18 +2,16 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="tab1" href="/tabs/tab1">
+      <ion-tab-bar slot="bottom" color="success">
+        <ion-tab-button tab="kandang" href="/tabs/kandang">
           <ion-icon aria-hidden="true" :icon="statsChart" />
           <!-- <ion-label>Category</ion-label> -->
         </ion-tab-button>
-
-        <ion-tab-button tab="tab2" href="/tabs/tab2">
+        <ion-tab-button tab="history" href="/tabs/history">
           <ion-icon aria-hidden="true" :icon="documentOutline" />
           <!-- <ion-label>History</ion-label> -->
         </ion-tab-button>
-
-        <ion-tab-button tab="tab3" href="/tabs/tab3">
+        <ion-tab-button tab="setting" href="/tabs/setting">
           <ion-icon aria-hidden="true" :icon="settingsOutline" />
           <!-- <ion-label>Setting</ion-label> -->
         </ion-tab-button>

@@ -1,14 +1,14 @@
 <template>
     <ion-page>
         <ion-header :translucent="true">
-            <ion-toolbar>
+            <ion-toolbar color="success">
                 <ion-title class="ion-text-center">LOGIN</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="true" class="ion-padding">
             <div id="container">
-                <ion-avatar>
+                <ion-avatar class="ion-justify-content-center">
                     <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                 </ion-avatar>
                 <ion-item>
@@ -19,7 +19,7 @@
                     <ion-icon :src="lockClosed"></ion-icon>
                     <ion-input type="password" placeholder="Password"></ion-input>
                 </ion-item>
-                <ion-button shape="round" expand="full" @click="$router.push('/tabs/tab1')">Login</ion-button>
+                <ion-button shape="round" expand="full" @click="$router.push('/tabs/kandang')">Login</ion-button>
             </div>
             <login-panel @do-login="doLogin"></login-panel>
         </ion-content>
@@ -52,7 +52,7 @@ export default defineComponent({
             const { email, password } = payload;
             try {
                 await store.dispatch("login", { email, password });
-                router.replace("/tabs/tabs1");
+                router.replace("/tabs/kandang");
                 return null;
             } catch (error) {
                 alert(error);

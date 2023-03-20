@@ -23,7 +23,8 @@
     "phonegap-plugin-barcodescanner": "^8.1.0",
     "vue": "^3.2.21",
     "vue-router": "^4.0.12",
-    "vue3-qrcode-reader": "^0.0.1"
+    "vue3-qrcode-reader": "^0.0.1",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@capacitor/cli": "4.7.0",

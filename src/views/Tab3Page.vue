@@ -21,7 +21,7 @@
           <ion-label @click="popupPW">Change Password</ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Log Out</ion-label>
+          <ion-label @click="$router.push('/login')">Log Out</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -34,51 +34,51 @@ import ExploreContainer from '@/components/ExploreContainer.vue';
 import { alertController } from '@ionic/vue';
 
 export default {
-    components: { IonLabel },
-    setup() {
-      const popupName = async () => {
-        const alert = await alertController.create({
-          header: 'Change Name',
-          buttons: ['OK'],
-          inputs: [
-            {
-              placeholder: 'Input New Name',
-              attributes: {
-                maxlength: 15,
-              },
+  components: { IonLabel },
+  setup() {
+    const popupName = async () => {
+      const alert = await alertController.create({
+        header: 'Change Name',
+        buttons: ['OK'],
+        inputs: [
+          {
+            placeholder: 'Input New Name',
+            attributes: {
+              maxlength: 15,
             },
-          ],
-        });
+          },
+        ],
+      });
 
-        await alert.present();
-      };
+      await alert.present();
+    };
 
-      const popupPW = async () => {
-        const alert = await alertController.create({
-          header: 'Change Password',
-          buttons: ['OK'],
-          inputs: [
-            {
-              placeholder: 'Input Current Password',
-              attributes: {
-                maxlength: 15,
-              },
+    const popupPW = async () => {
+      const alert = await alertController.create({
+        header: 'Change Password',
+        buttons: ['OK'],
+        inputs: [
+          {
+            placeholder: 'Input Current Password',
+            attributes: {
+              maxlength: 15,
             },
-            {
-              placeholder: 'Input New Password',
-              attributes: {
-                maxlength: 15,
-              },
+          },
+          {
+            placeholder: 'Input New Password',
+            attributes: {
+              maxlength: 15,
             },
-          ],
-        });
+          },
+        ],
+      });
 
-        await alert.present();
-      };
+      await alert.present();
+    };
 
-      return { popupName, popupPW };
-    },
-  };
+    return { popupName, popupPW };
+  },
+};
 </script>
 
 

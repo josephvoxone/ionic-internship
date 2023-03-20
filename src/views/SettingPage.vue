@@ -1,14 +1,14 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
-        <ion-title>Setting</ion-title>
+      <ion-toolbar color="success">
+        <ion-title class="ion-text-center">Setting</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Tab 3</ion-title>
+          <ion-title size="large">Setting</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-list inset="true">
@@ -80,49 +80,3 @@ export default {
     },
   };
 </script>
-
-
-<!-- <template>
-  <ion-button @click="presentAlert">Click Me</ion-button>
-</template> -->
-
-<!-- <script lang="ts">
-  import { IonButton, alertController } from '@ionic/vue';
-
-  export default {
-    components: { IonButton },
-    setup() {
-      const presentAlert = async () => {
-        const alert = await alertController.create({
-          header: 'Please enter your info',
-          buttons: ['OK'],
-          inputs: [
-            {
-              placeholder: 'Name',
-            },
-            {
-              placeholder: 'Nickname (max 8 characters)',
-              attributes: {
-                maxlength: 8,
-              },
-            },
-            {
-              type: 'number',
-              placeholder: 'Age',
-              min: 1,
-              max: 100,
-            },
-            {
-              type: 'textarea',
-              placeholder: 'A little about yourself',
-            },
-          ],
-        });
-
-        await alert.present();
-      };
-
-      return { presentAlert };
-    },
-  };
-</script> -->

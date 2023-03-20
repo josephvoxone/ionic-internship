@@ -5,7 +5,7 @@ import TabsPage from '../views/TabsPage.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/tabs/tab1'
+    redirect: '/tabs/kandang'
   },
   {
     path: '/scan-barcode',
@@ -29,21 +29,21 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: '',
-        redirect: '/tabs/tab1'
+        redirect: '/tabs/kandang'
       },
       {
-        path: 'tab1',
-        component: () => import('@/views/Tab1Page.vue'),
+        path: 'kandang',
+        component: () => import('@/views/KandangPage.vue'),
 
       },
 
       {
-        path: 'tab2',
-        component: () => import('@/views/Tab2Page.vue')
+        path: 'history',
+        component: () => import('@/views/HistoryPage.vue')
       },
       {
-        path: 'tab3',
-        component: () => import('@/views/Tab3Page.vue')
+        path: 'setting',
+        component: () => import('@/views/SettingPage.vue')
       }
     ]
   }

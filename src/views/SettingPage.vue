@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar color="succes">
+      <ion-toolbar color="success">
         <ion-title>Setting</ion-title>
       </ion-toolbar>
     </ion-header>

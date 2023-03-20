@@ -1,7 +1,7 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar>
+      <ion-toolbar color="success">
         <ion-title class="ion-text-center">History</ion-title>
       </ion-toolbar>
     </ion-header>

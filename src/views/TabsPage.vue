@@ -7,12 +7,10 @@
           <ion-icon aria-hidden="true" :icon="statsChart" />
           <!-- <ion-label>Category</ion-label> -->
         </ion-tab-button>
-
         <ion-tab-button tab="history" href="/tabs/history">
           <ion-icon aria-hidden="true" :icon="documentOutline" />
           <!-- <ion-label>History</ion-label> -->
         </ion-tab-button>
-
         <ion-tab-button tab="setting" href="/tabs/setting">
           <ion-icon aria-hidden="true" :icon="settingsOutline" />
           <!-- <ion-label>Setting</ion-label> -->

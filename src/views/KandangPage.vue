@@ -32,7 +32,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-card button @click="$router.push('/detail')" mode="ios" class="ion-padding-vertical"
+      <ion-card button @click="$router.push('/report')" mode="ios" class="ion-padding-vertical"
         v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
         <ion-item mode="ios" lines="none">
           <ion-thumbnail slot="start">

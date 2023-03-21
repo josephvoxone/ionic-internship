@@ -11,15 +11,14 @@
           <ion-title size="large">History</ion-title>
         </ion-toolbar>
       </ion-header>
-          <ion-item v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"
-            :key="index">
-              <ion-label>
-                <h2>Cannacht Open House</h2>
-              </ion-label>
-              <ion-label slot="end">
-                <h3>Visited at 09/03/23 13:47</h3>
-              </ion-label>
-          </ion-item>
+      <ion-item v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="index">
+        <ion-label>
+          <h2>Cannacht Open House</h2>
+        </ion-label>
+        <ion-label slot="end">
+          <h3>Visited at 09/03/23 13:47</h3>
+        </ion-label>
+      </ion-item>
 
       <!-- list history
       <ion-card>

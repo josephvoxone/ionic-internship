@@ -18,8 +18,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/ScanBarcodePage.vue')
   },
   {
-    path: '/detail',
-    component: () => import('@/views/DetailPage.vue')
+    path: '/report',
+    component: () => import('@/views/ReportPage.vue')
   },
   {
     path: '/tabs/',

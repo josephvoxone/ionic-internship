@@ -2,7 +2,7 @@ import http from "@/common/api/axios.service";
 
 class PromoService {
     getPromos(params: any) {
-        return http.get(`/example`, { params })
+        return http.get(`/kandang`, { params })
             .then((res) => res)
             .catch(error => { throw error })
     }

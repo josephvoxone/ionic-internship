@@ -22,14 +22,6 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/DetailPage.vue')
   },
   {
-    path: '/change-name',
-    component: () => import('@/views/ChangeNamePage.vue')
-  },
-  {
-    path: '/change-password',
-    component: () => import('@/views/ChangePasswordPage.vue')
-  },
-  {
     path: '/tabs/',
     component: TabsPage,
     children: [

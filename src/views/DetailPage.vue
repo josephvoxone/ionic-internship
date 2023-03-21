@@ -29,7 +29,7 @@
                 </ion-list>
                 <ion-list :inset="true">
                     <ion-item>
-                        <ion-label position="stacked">Reason</ion-label>
+                        <ion-label position="stacked"><h1>Reason</h1></ion-label>
                         <ion-input placeholder="Enter text">the chicken feed ran out, there was death in 50 chickens, the
                             cage was damaged at the door.</ion-input>
                     </ion-item>
@@ -62,7 +62,7 @@
                 </ion-list>
                 <ion-list :inset="true">
                     <ion-item>
-                        <ion-label position="stacked">Reason</ion-label>
+                        <ion-label position="stacked"><h1>Reason</h1></ion-label>
                         <ion-input placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
@@ -84,7 +84,7 @@
                         <ion-input placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
-                <ion-button fill="outline" shape="round" expand="full">Submit</ion-button>
+                <ion-button fill="outline" shape="round" expand="full" color="success">Submit</ion-button>
             </div>
         </ion-content>
     </ion-page>

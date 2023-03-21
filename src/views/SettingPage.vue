@@ -11,7 +11,7 @@
           <ion-title size="large">Setting</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-list inset="true">
+      <ion-list :inset="true">
         <ion-item>
           <!-- <ion-label @click="$router.push('/change-name')">Change Name</ion-label> -->
           <ion-label @click="popupName">Change Name</ion-label>
@@ -29,12 +29,12 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem } from '@ionic/vue';
 import ExploreContainer from '@/components/ExploreContainer.vue';
 import { alertController } from '@ionic/vue';
 
 export default {
-  components: { IonLabel },
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem },
   setup() {
     const popupName = async () => {
       const alert = await alertController.create({

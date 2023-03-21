@@ -16,13 +16,13 @@
       <ion-toolbar>
         <ion-segment value="buttons" mode="ios">
           <ion-segment-button value="default">
-            <ion-label>Name</ion-label>
+            <ion-label>All</ion-label>
           </ion-segment-button>
           <ion-segment-button value="segment">
-            <ion-label>ID</ion-label>
+            <ion-label>Open House</ion-label>
           </ion-segment-button>
           <ion-segment-button value="buttons">
-            <ion-label>Type</ion-label>
+            <ion-label>Closed House</ion-label>
           </ion-segment-button>
         </ion-segment>
       </ion-toolbar>

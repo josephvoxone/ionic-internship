@@ -30,7 +30,7 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/vue';
 import { person, lockClosed } from 'ionicons/icons';
 import { defineComponent } from 'vue';
-// import LoginPanel from "./components/LoginPanel.vue";
+import LoginPanel from "./components/LoginPanel.vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import router from '@/router';

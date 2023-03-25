@@ -52,8 +52,16 @@
             </div>
             <div v-if="segment == 'history'">
                 <ion-content :fullscreen="true">
-                    <ion-card button @click="$router.push('/detail')" mode="ios" class="ion-padding-vertical"
+                    <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
                         v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
+                        <ion-item lines="none">
+                            <ion-label>
+                                <p>100012103</p>
+                            </ion-label>
+                            <ion-label slot="end">
+                                <p>21 Maret 2023</p>
+                            </ion-label>
+                        </ion-item>
                         <ion-item mode="ios" lines="none">
                             <ion-thumbnail slot="start">
                                 <img alt="Silhouette of mountains"
@@ -63,11 +71,20 @@
                                 <h2>
                                     Aria Mitra Sejati
                                 </h2>
-                                <p>ID : 03</p>
+                                <p>Surabaya - Jawa Timur</p>
                             </ion-label>
-                            <ion-chip slot="end" color="success">
+                        </ion-item>
+                        <div style="width: 95%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
+                        <ion-item lines="none">
+                            <ion-label>
+                                <p>Last updated</p>
+                            </ion-label>
+                            <ion-button slot="end" color="dark">
                                 Detail
-                            </ion-chip>
+                            </ion-button>
+                            <ion-button slot="end" color="dark" fill="outline">
+                                Delete
+                            </ion-button>
                         </ion-item>
                     </ion-card>
                 </ion-content>
@@ -77,11 +94,14 @@
 </template>
 
 <script  lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
+import Detail from './Detail.vue';
+
 export default defineComponent({
     name: "ReportPage",
     components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal },
+
     setup() {
         const segment = ref('report');
         const formatViewers = (viewers: number) => {
@@ -94,7 +114,8 @@ export default defineComponent({
         }
         return {
             formatViewers,
-            segment
+            segment,
+            message: 'This modal example uses the modalController to present and dismiss modals.',
         }
     },
     methods: {
@@ -107,7 +128,19 @@ export default defineComponent({
             } else if (event.detail.deltaY < 0) {
                 (this.$refs['header'] as any).$el.style.top = `0px`;
             }
-        }
+        },
+        async openDetail() {
+            const detail = await modalController.create({
+                component: Detail,
+            });
+            detail.present();
+
+            const { data, role } = await detail.onWillDismiss();
+
+            if (role === 'confirm') {
+                this.message = `Hello, ${data}!`;
+            }
+        },
     },
 })
 </script>
@@ -124,5 +157,10 @@ ion-textarea.custom-textarea {
 
 .toolbar-segment-report {
     padding: 0 1em;
+}
+
+ion-item.line-buttom {
+    --padding-end: 0px;
+    --inner-padding-end: 0px;
 }
 </style>

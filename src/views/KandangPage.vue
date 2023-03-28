@@ -95,6 +95,15 @@ export default defineComponent({
           // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
           // tokenService.saveToken(response.token);
           // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
+
+          //Segments Filter
+          if (this.params.type === 'open') {
+            this.kandangs = response.filter((kandang: any) => kandang.type === 'open')
+            } else if (this.params.type === 'closed') {
+              this.kandangs = response.filter((kandang: any) => kandang.type === 'closed')
+            } else {
+              this.kandangs = response
+          }
         })
       // .finally(() => this.loading = false)
 

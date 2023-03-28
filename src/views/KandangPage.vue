@@ -33,7 +33,7 @@
 
     <ion-content :fullscreen="true">
       <ion-card button @click="$router.push('/report')" mode="ios" class="ion-padding-vertical"
-        v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
+        v-for="(item, index) in kandangs" :key="index">
         <ion-item mode="ios" lines="none">
           <ion-img class="img-icon" slot="start" :src="require('@/assets/img/chicken.png')"></ion-img>
           <!-- <ion-thumbnail slot="start">
@@ -41,12 +41,12 @@
           </ion-thumbnail> -->
           <ion-label>
             <h2>
-              Aria Mitra Sejati
+              {{item.name}}
             </h2>
-            <p>Jombang</p>
+            <p>{{item.city}}</p>
           </ion-label>
-          <ion-chip slot="end" :color="item % 2 == 0 ? 'success' : 'warning'">
-            {{ item % 2 == 0 ? 'Open' : 'Close' }} House
+          <ion-chip slot="end" :color="item.type == 'open' ? 'success' : 'warning'">
+            {{ item.type == 'open' ? 'Open House' : 'Closed House' }}
           </ion-chip>
         </ion-item>
       </ion-card>
@@ -68,6 +68,7 @@ export default defineComponent({
   setup() {
     const ionRouter = useIonRouter()
     const params = ref({ type: 'all', q: '' })
+    const kandangs:any = ref([])
 
     return {
       // variable
@@ -77,14 +78,19 @@ export default defineComponent({
       scan,
       person,
       // router
-      ionRouter
+      ionRouter,
+      //arraykandang
+      kandangs
     }
   },
   methods: {
     getKandang() {
       // Fecth data kandang
       kandangService.getKandang(this.params)
-        .then((response: any) => {
+        .then((response: any) => { 
+          console.log('hasil', response)
+          this.kandangs = response
+          console.log(this.kandangs)
           //Saving object data
           // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
           // tokenService.saveToken(response.token);

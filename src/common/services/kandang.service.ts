@@ -4,7 +4,7 @@ class KandangService {
     getKandang(params: any) {
         console.log('Service', params)
         return http.get(`/kandang`, { params })
-            .then((res) => res)
+            .then((res) => res.data)
             .catch(error => { throw error })
     }
 

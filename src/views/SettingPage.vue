@@ -1,27 +1,42 @@
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar color="success">
-        <ion-title class="ion-text-center">Setting</ion-title>
+      <ion-toolbar>
+        <ion-title>Setting</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Setting</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-list :inset="true">
-        <ion-item>
+      <ion-list mode="ios">
+        <ion-list-header>
+          <ion-label>Atur Profile</ion-label>
+        </ion-list-header>
+        <ion-item button @click="popupName">
+          <ion-icon slot="start" :icon="person"></ion-icon>
           <!-- <ion-label @click="$router.push('/change-name')">Change Name</ion-label> -->
-          <ion-label @click="popupName">Change Name</ion-label>
+          <ion-label>
+            <h3>Ubah Nama</h3>
+            <p>Atur dan ubah nama profilemu</p>
+          </ion-label>
         </ion-item>
-        <ion-item>
+        <ion-item button @click="popupPW">
+          <ion-icon slot="start" :icon="documentLock"></ion-icon>
           <!-- <ion-label @click="$router.push('/change-password')">Change Password</ion-label> -->
-          <ion-label @click="popupPW">Change Password</ion-label>
+          <ion-label>
+            <h3>Ubah Password</h3>
+            <p>Atur dan ubah kata sandimu</p>
+          </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-label @click="$router.push('/login')">Log Out</ion-label>
+
+        <ion-list-header>
+          <ion-label>Setting</ion-label>
+        </ion-list-header>
+
+        <ion-item button @click="$router.push('/login')">
+          <ion-icon slot="start" :icon="logOut"></ion-icon>
+          <ion-label>
+            <h3>Log Out</h3>
+            <p>Keluar dari aplikasi</p>
+          </ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
@@ -29,12 +44,12 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem } from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
+import { documentLock, logOut, person } from 'ionicons/icons';
 
 export default {
-  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem },
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader },
   setup() {
     const popupName = async () => {
       const alert = await alertController.create({
@@ -76,7 +91,11 @@ export default {
       await alert.present();
     };
 
-    return { popupName, popupPW };
+    return {
+      popupName, popupPW,
+
+      logOut, documentLock, person
+    };
   },
 };
 </script>

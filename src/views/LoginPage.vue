@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <ion-header :translucent="true">
-            <ion-toolbar color="success">
+            <ion-toolbar >
                 <ion-title class="ion-text-center">LOGIN</ion-title>
             </ion-toolbar>
         </ion-header>

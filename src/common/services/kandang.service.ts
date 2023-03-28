@@ -1,7 +1,8 @@
 import http from "@/common/api/axios.service";
 
-class PromoService {
-    getPromos(params: any) {
+class KandangService {
+    getKandang(params: any) {
+        console.log('Service', params)
         return http.get(`/kandang`, { params })
             .then((res) => res)
             .catch(error => { throw error })
@@ -23,4 +24,4 @@ class PromoService {
         return http.delete(`/example/${id}`)
     }
 }
-export default new PromoService();
+export default new KandangService();

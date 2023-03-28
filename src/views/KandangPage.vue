@@ -88,7 +88,7 @@ export default defineComponent({
       // Fecth data kandang
       kandangService.getKandang(this.params)
         .then((response: any) => { 
-          console.log('hasil', response)
+          console.log(response)
           this.kandangs = response
           console.log(this.kandangs)
           //Saving object data

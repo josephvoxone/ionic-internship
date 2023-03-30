@@ -6,6 +6,7 @@
     "ionic:serve": "vue-cli-service serve",
     "ionic:build": "vue-cli-service build",
     "ionic:serve ciomaspp": "vue-cli-service serve --mode ciomaspp",
+    "ionic:serve cadangan": "vue-cli-service serve --mode cadangan",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"

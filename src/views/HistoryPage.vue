@@ -13,28 +13,19 @@
       </ion-header>
 
       <ion-list>
-        <ion-card v-for="(item, index) in [1, 2, 3]" :key="index" mode="ios">
+        <ion-card v-for="(item, index) in dailyLog && kandangs" :key="index" mode="ios">
           <ion-item lines="none">
             <ion-icon slot="start" :icon="logIn"></ion-icon>
             <ion-label>
-              <h2>Cannacht Open House</h2>
-              <p>2 Mar 2023 13:47</p>
+              <h3>
+                {{ item.name }}
+              </h3>
+              <p>
+                {{ item.login }}
+              </p>
             </ion-label>
-            <ion-chip slot="end" color="success">
-              Check-in
-            </ion-chip>
-          </ion-item>
-        </ion-card>
-
-        <ion-card v-for="(item, index) in [1, 2, 3]" :key="index" mode="ios">
-          <ion-item lines="none">
-            <ion-icon slot="start" :icon="logOut"></ion-icon>
-            <ion-label>
-              <h2>Japfa Closed House</h2>
-              <p>12 Mar 2023 13:47</p>
-            </ion-label>
-            <ion-chip slot="end" color="warning">
-              Check-out
+            <ion-chip slot="end" :color="item.type == 'login' ? 'success' : 'warning'">
+              {{ item.type == 'login' ? 'Check In' : 'Check Out' }}
             </ion-chip>
           </ion-item>
         </ion-card>
@@ -43,7 +34,78 @@
   </ion-page>
 </template>
 
-<script setup lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonIcon, IonLabel, IonChip } from '@ionic/vue';
+<script lang="ts">
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonIcon, IonLabel, IonChip, useIonRouter } from '@ionic/vue';
 import { logIn, logOut } from 'ionicons/icons';
+import { defineComponent, ref } from 'vue';
+
+// Services
+import historyService from '@/common/services/history.service';
+import dailyLogService from '@/common/services/dailyLog.service';
+import kandangService from '@/common/services/kandang.service';
+
+export default defineComponent({
+  name: "HistoryPage",
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonIcon, IonLabel, IonChip, useIonRouter },
+  setup() {
+    const ionRouter = useIonRouter()
+    const params = ref({ type: '', q: '' })
+    const dailyLog: any = ref([])
+    const kandangs: any = ref([])
+
+    return {
+      // variable
+      params,
+      // icons
+      logIn,
+      logOut,
+      // router
+      ionRouter,
+      //arrayhistory
+      dailyLog,
+      kandangs
+    }
+  },
+  methods: {
+    getDailyLog() {
+      // Fecth data history
+      dailyLogService.getDailyLog(this.params)
+        .then((response: any) => {
+          console.log(response)
+          this.dailyLog = response
+          console.log(this.dailyLog)
+          //Saving object data
+          // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
+          // tokenService.saveToken(response.token);
+          // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
+
+          //Segments Filter
+          if (this.params.type === 'login') {
+            this.dailyLog = response.filter((dailyLog: any) => dailyLog.type === 'login')
+          } else if (this.params.type === 'logout') {
+            this.dailyLog = response.filter((dailyLog: any) => dailyLog.type === 'logout')
+          } else {
+            this.dailyLog = response
+          }
+        })
+      },
+      getKandang() {
+        // Fecth data history
+        kandangService.getKandang(this.params)
+          .then((response: any) => {
+            console.log(response)
+            this.kandangs = response
+            console.log(this.kandangs)
+            //Saving object data
+            // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
+            // tokenService.saveToken(response.token);
+            // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
+      })
+    },
+    },
+    ionViewWillEnter() {
+      this.getDailyLog();
+      this.getKandang();
+    },
+  })
 </script>

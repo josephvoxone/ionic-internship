@@ -5,6 +5,7 @@
   "scripts": {
     "ionic:serve": "vue-cli-service serve",
     "ionic:build": "vue-cli-service build",
+    "ionic:serve ciomaspp": "vue-cli-service serve --mode ciomaspp",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"

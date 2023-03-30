@@ -52,13 +52,13 @@
             </div>
             <div v-if="segment == 'history'">
                 <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
-                    v-for="(item, index) in [1, 2, 3, 4, 5]" :key="index">
+                    v-for="(item, index) in reports && kandangs" :key="index">
                     <ion-item lines="none">
                         <ion-label>
-                            <p>100012103</p>
+                            <p>{{item.id}}</p>
                         </ion-label>
                         <ion-label slot="end">
-                            <p>21 Maret 2023</p>
+                            <p>{{item.created_at}}</p>
                         </ion-label>
                     </ion-item>
                     <ion-item mode="ios" lines="none">
@@ -68,9 +68,9 @@
                         </ion-thumbnail>
                         <ion-label>
                             <h2>
-                                Aria Mitra Sejati
+                                {{item.name}}
                             </h2>
-                            <p>Surabaya - Jawa Timur</p>
+                            <p>{{item.city}}</p>
                         </ion-label>
                     </ion-item>
                     <ion-item lines="none">
@@ -88,21 +88,39 @@
 </template>
 
 <script  lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController, useIonRouter } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import ReportDetail from './ReportDetail.vue';
+//service
+import reportService from '@/common/services/report.service';
+import kandangService from '@/common/services/kandang.service';
 
 export default defineComponent({
     name: "ReportPage",
-    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal },
+    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, useIonRouter },
 
     setup() {
         const segment = ref('report');
+        const ionRouter = useIonRouter()
+        const params = ref({ type: 'all', q: '' })
+        const reports: any = ref([])
+        const kandangs: any = ref([])
+
         return {
+            
             segment,
             message: 'This modal example uses the modalController to present and dismiss modals.',
+            // variable
+            params,
+            // router
+            ionRouter,
+            //arrayreport
+            reports,
+            //arraykandang
+            kandangs
         }
     },
+
     methods: {
         segmentChanged(ev: CustomEvent) {
             this.segment = ev.detail.value;
@@ -119,6 +137,32 @@ export default defineComponent({
                 this.message = `Hello, ${data}!`;
             }
         },
+        
+        getReport() {
+            // Fecth data Report
+            reportService.getReport(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.reports = response
+                    console.log(this.reports)
+                })
+        },
+
+        getKandang() {
+            // Fecth data kandang
+            kandangService.getKandang(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.kandangs = response
+                    console.log(this.kandangs)
+                })
+        },
+
+        ionViewWillEnter() {
+            this.getReport();
+            this.getKandang();
+        },
+    
     },
 })
 </script>

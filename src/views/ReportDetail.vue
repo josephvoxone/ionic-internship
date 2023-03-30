@@ -4,7 +4,7 @@
             <ion-buttons slot="start">
                 <ion-button color="medium" @click="cancel">Cancel</ion-button>
             </ion-buttons>
-            <ion-title>Detail</ion-title>
+            <ion-title class="ion-text-center">Detail</ion-title>
             <ion-buttons slot="end">
                 <ion-button @click="confirm">Confirm</ion-button>
             </ion-buttons>
@@ -15,11 +15,11 @@
             <ion-avatar slot="start">
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label>
+            <ion-label v-for="(item, index) in kandangs" :key="index">
                 <h2>
-                    Aria Mitra Sejati
+                    Aria
                 </h2>
-                <p>Surabaya - Jawa Timur</p>
+                <p>Qiongji Estuary</p>
             </ion-label>
         </ion-item>
         <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
@@ -88,24 +88,68 @@ import {
     IonItem,
     IonLabel,
     IonInput,
-    modalController
+    modalController,
+    useIonRouter
 } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { chevronBackOutline } from 'ionicons/icons';
+import reportService from '@/common/services/report.service';
+import kandangService from '@/common/services/kandang.service';
 
 export default defineComponent({
     name: 'Detail',
-    components: { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput },
+    components: { useIonRouter, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput },
     setup() {
+        const ionRouter = useIonRouter()
+        const params = ref({ type: 'all', q: '' })
+        const reports: any = ref([])
+        const kandangs: any = ref([])
+
         return {
-            chevronBackOutline
+            chevronBackOutline,
+
+            // variable
+            params,
+            // router
+            ionRouter,
+            //arrayreport
+            reports,
+            //arraykandang
+            kandangs
         }
     },
+
     methods: {
+        getReport() {
+            // Fecth data Report
+            reportService.getReport(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.reports = response
+                    console.log(this.reports)
+                })
+        },
+
+        getKandang() {
+            // Fecth data kandang
+            kandangService.getKandang(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.kandangs = response
+                    console.log(this.kandangs)
+                })
+        },
+
+        ionViewWillEnter() {
+            this.getReport();
+            this.getKandang();
+        },
+
         cancel() {
             return modalController.dismiss(null, 'cancel');
         },
         confirm() {
+            return modalController.dismiss(null, 'confirm');
             // return detailController.dismiss(this.name, 'confirm');
         },
     },

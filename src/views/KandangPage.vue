@@ -7,8 +7,8 @@
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
 
-        <ion-searchbar @ion-change="getKandang()" v-model="params.q" animated placeholder="Cari nama kandang.." color="light"
-          mode="ios"></ion-searchbar>
+        <ion-searchbar @ion-change="getKandang()" v-model="params.q" animated placeholder="Cari nama kandang.."
+          color="light" mode="ios"></ion-searchbar>
 
         <ion-buttons slot="end" @click="$router.push('/scan-barcode')">
           <ion-button>
@@ -41,9 +41,9 @@
           </ion-thumbnail> -->
           <ion-label>
             <h2>
-              {{item.name}}
+              {{ item.name }}
             </h2>
-            <p>{{item.city}}</p>
+            <p>{{ item.city }}</p>
           </ion-label>
           <ion-chip slot="end" :color="item.type == 'open' ? 'success' : 'warning'">
             {{ item.type == 'open' ? 'Open House' : 'Closed House' }}
@@ -68,7 +68,7 @@ export default defineComponent({
   setup() {
     const ionRouter = useIonRouter()
     const params = ref({ type: 'all', q: '' })
-    const kandangs:any = ref([])
+    const kandangs: any = ref([])
 
     return {
       // variable
@@ -87,7 +87,7 @@ export default defineComponent({
     getKandang() {
       // Fecth data kandang
       kandangService.getKandang(this.params)
-        .then((response: any) => { 
+        .then((response: any) => {
           console.log(response)
           this.kandangs = response
           console.log(this.kandangs)
@@ -99,10 +99,10 @@ export default defineComponent({
           //Segments Filter
           if (this.params.type === 'open') {
             this.kandangs = response.filter((kandang: any) => kandang.type === 'open')
-            } else if (this.params.type === 'closed') {
-              this.kandangs = response.filter((kandang: any) => kandang.type === 'closed')
-            } else {
-              this.kandangs = response
+          } else if (this.params.type === 'closed') {
+            this.kandangs = response.filter((kandang: any) => kandang.type === 'closed')
+          } else {
+            this.kandangs = response
           }
         })
       // .finally(() => this.loading = false)

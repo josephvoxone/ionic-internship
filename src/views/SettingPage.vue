@@ -47,10 +47,24 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
+// import axios from 'axios';
 
 export default {
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader },
   setup() {
+    // const endpoint = 'http://127.0.0.1:3333/karyawan/getData';
+    // const data = {
+    //   name: ''
+    // };
+
+    // axios.put(endpoint, data)
+    //   .then(response => {
+    //     console.log(response.data); // output hasil respons
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
     const popupName = async () => {
       const alert = await alertController.create({
         header: 'Change Name',

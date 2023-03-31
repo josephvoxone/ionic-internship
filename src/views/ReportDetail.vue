@@ -17,19 +17,18 @@
             </ion-avatar>
             <ion-label v-for="(item, index) in kandangs" :key="index">
                 <h2>
-                    Aria
+                    {{item.name}}
                 </h2>
-                <p>Qiongji Estuary</p>
+                <p>{{item.city}}</p>
             </ion-label>
         </ion-item>
         <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
         <ion-item lines="none">
-            <ion-label>
+            <ion-label v-for="(item, index) in reports" :key="index">
                 <h2>
                     Reason
                 </h2>
-                <p>the chicken feed ran out, there was death in 50</p>
-                <p>chickens, the cage was damaged at the door.</p>
+                <p>{{ item.reason }}</p>
             </ion-label>
         </ion-item>
         <ion-item lines="none">

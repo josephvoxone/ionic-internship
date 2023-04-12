@@ -19,6 +19,8 @@
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true">
+
+            <!-- Report Segment -->
             <div v-if="segment == 'report'">
                 <ion-list :inset="true">
                     <ion-datetime-button datetime="datetime"></ion-datetime-button>
@@ -31,34 +33,39 @@
                         <ion-label position="stacked">
                             <h1>Reason</h1>
                         </ion-label>
-                        <ion-input placeholder="Enter text"></ion-input>
+                        <ion-input v-model="report.reason" placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
                 <ion-list :inset="true">
                     <ion-item>
                         <ion-label position="fixed">Depletion</ion-label>
-                        <ion-input placeholder="Enter text"></ion-input>
+                        <ion-input v-model="report.depletion" placeholder="Enter text"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label position="fixed">Feed Intake</ion-label>
-                        <ion-input placeholder="Enter text"></ion-input>
+                        <ion-input v-model="report.feed_intake" placeholder="Enter text"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-label position="fixed">Avg bw</ion-label>
-                        <ion-input placeholder="Enter text"></ion-input>
+                        <ion-input v-model="report.avg_bw" placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
                 <ion-button fill="outline" shape="round" expand="full">Submit</ion-button>
             </div>
+
+            <!-- History Segment -->
             <div v-if="segment == 'history'">
+                <!-- <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
+                    v-for="(item, index) in reports && kandangs" :key="index"> -->
                 <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
-                    v-for="(item, index) in reports && kandangs" :key="index">
+                    v-for="(item, index) in filteredReports" :key="index">
+                    <!-- Tampilkan nama kandang -->
                     <ion-item lines="none">
                         <ion-label>
-                            <p>{{item.id}}</p>
+                            <p>{{ item.name }}</p>
                         </ion-label>
                         <ion-label slot="end">
-                            <p>{{item.created_at}}</p>
+                            <p>{{ item.created_at }}</p>
                         </ion-label>
                     </ion-item>
                     <ion-item mode="ios" lines="none">
@@ -68,9 +75,9 @@
                         </ion-thumbnail>
                         <ion-label>
                             <h2>
-                                {{item.name}}
+                                {{ item.name }}
                             </h2>
-                            <p>{{item.city}}</p>
+                            <p>{{ item.city }}</p>
                         </ion-label>
                     </ion-item>
                     <ion-item lines="none">
@@ -78,7 +85,7 @@
                             <p>Last updated</p>
                         </ion-label>
                         <ion-button slot="end" color="dark">
-                            Lihat Detail
+                            See Detail
                         </ion-button>
                     </ion-item>
                 </ion-card>
@@ -91,9 +98,12 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController, useIonRouter } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import ReportDetail from './ReportDetail.vue';
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 //service
 import reportService from '@/common/services/report.service';
 import kandangService from '@/common/services/kandang.service';
+import dailyLogService from '@/common/services/dailyLog.service';
 
 export default defineComponent({
     name: "ReportPage",
@@ -105,9 +115,22 @@ export default defineComponent({
         const params = ref({ type: 'all', q: '' })
         const reports: any = ref([])
         const kandangs: any = ref([])
+        const dailyLogs: any = ref([])
+        const report: any = ref({})
+        const kandangID = ref()
+        const selectedKandang = ref()
+        const route = useRoute()
+        kandangID.value = route.query.kandangID || '';
+        console.log(route)
+        // const filteredReports = ref([])
+        // const filteredReports = computed(() => {
+        //     if (!kandangID.value) {
+        //         // If selectedKandang is empty, return all reports
+        //         return reports.value;
+        //     }
+        // })
 
         return {
-            
             segment,
             message: 'This modal example uses the modalController to present and dismiss modals.',
             // variable
@@ -117,14 +140,62 @@ export default defineComponent({
             //arrayreport
             reports,
             //arraykandang
-            kandangs
+            kandangs,
+            //arraydailyLog
+            dailyLogs,
+            kandangID,
+            selectedKandang,
+            report
         }
     },
 
+    computed: {
+        filteredReports(): any[] {
+            return this.dailyLogs
+                .map((dailyLog: any) => {
+                    const kandang = this.kandangs.find((kandang: any) => kandang.id_kandang === dailyLog.id_kandang);
+                    return {
+                        ...dailyLog,
+                        kandangName: kandang ? kandang.name : 'Nama Kandang Tidak Ditemukan',
+                    };
+                })
+                .filter((dailyLog: any) => this.segment === 'history' || dailyLog.status === this.segment);
+        }
+    },
+
+
+    mounted() {
+        console.log(this.kandangID, "id")
+        this.getKandang()
+    },
+
     methods: {
+        getKandang() {
+            //nemanggil ID
+            kandangService.getDetailbyID(this.kandangID) 
+                .then((response: any) => {
+                    console.log(response)
+                    this.kandangs = response
+                    console.log(this.kandangs)
+                })
+
+                // kandangService.getKandang(this.params)
+                // .then((response: any) => {
+                //     console.log(response)
+                //     this.kandangs = response
+                //     console.log(this.kandangs)
+                // })
+        },
+
+        created() {
+            // Ambil data kandang yang dikirimkan melalui query params
+            this.kandangID = this.$route.query.kandangID;
+        },
+
         segmentChanged(ev: CustomEvent) {
             this.segment = ev.detail.value;
         },
+
         async openDetail() {
             const detail = await modalController.create({
                 component: ReportDetail,
@@ -137,7 +208,7 @@ export default defineComponent({
                 this.message = `Hello, ${data}!`;
             }
         },
-        
+
         getReport() {
             // Fecth data Report
             reportService.getReport(this.params)
@@ -148,13 +219,13 @@ export default defineComponent({
                 })
         },
 
-        getKandang() {
-            // Fecth data kandang
-            kandangService.getKandang(this.params)
+        getDailyLog() {
+            // Fecth data dailyLog
+            dailyLogService.getDailyLog(this.params)
                 .then((response: any) => {
                     console.log(response)
-                    this.kandangs = response
-                    console.log(this.kandangs)
+                    this.dailyLogs = response
+                    console.log(this.dailyLogs)
                 })
         },
 
@@ -162,7 +233,6 @@ export default defineComponent({
             this.getReport();
             this.getKandang();
         },
-    
     },
 })
 </script>

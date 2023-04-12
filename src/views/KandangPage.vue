@@ -32,7 +32,7 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-card button @click="$router.push('/report')" mode="ios" class="ion-padding-vertical"
+      <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical"
         v-for="(item, index) in kandangs" :key="index">
         <ion-item mode="ios" lines="none">
           <ion-img class="img-icon" slot="start" :src="require('@/assets/img/chicken.png')"></ion-img>
@@ -69,6 +69,7 @@ export default defineComponent({
     const ionRouter = useIonRouter()
     const params = ref({ type: 'all', q: '' })
     const kandangs: any = ref([])
+    const kandangID = ref()
 
     return {
       // variable
@@ -80,10 +81,21 @@ export default defineComponent({
       // router
       ionRouter,
       //arraykandang
-      kandangs
+      kandangs,
+      kandangID
     }
   },
   methods: {
+    gotoReport(item: { id: number }) {
+      console.log(item, "idfromkandang")
+      this.$router.push({
+        path: '/report',
+        query: {
+          kandangID: item.id
+        }
+      });
+    },
+
     getKandang() {
       // Fecth data kandang
       kandangService.getKandang(this.params)

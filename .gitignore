@@ -32,4 +32,5 @@ npm-debug.log*
 /www
 /.env
 /.env.ciomaspp
+/.env.local
 /package.json

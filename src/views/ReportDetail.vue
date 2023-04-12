@@ -77,23 +77,12 @@
 </template>
   
 <script lang="ts">
-import {
-    IonContent,
-    IonHeader,
-    IonTitle,
-    IonToolbar,
-    IonButtons,
-    IonButton,
-    IonItem,
-    IonLabel,
-    IonInput,
-    modalController,
-    useIonRouter
-} from '@ionic/vue';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, modalController, useIonRouter } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { chevronBackOutline } from 'ionicons/icons';
 import reportService from '@/common/services/report.service';
 import kandangService from '@/common/services/kandang.service';
+import dailyLogService from '@/common/services/dailyLog.service';
 
 export default defineComponent({
     name: 'Detail',
@@ -103,6 +92,7 @@ export default defineComponent({
         const params = ref({ type: 'all', q: '' })
         const reports: any = ref([])
         const kandangs: any = ref([])
+        const dailyLogs: any = ref([])
 
         return {
             chevronBackOutline,
@@ -114,7 +104,10 @@ export default defineComponent({
             //arrayreport
             reports,
             //arraykandang
-            kandangs
+            kandangs,
+            //arraydailyLog
+            dailyLogs
+
         }
     },
 
@@ -136,6 +129,16 @@ export default defineComponent({
                     console.log(response)
                     this.kandangs = response
                     console.log(this.kandangs)
+                })
+        },
+
+        getDailyLog() {
+            // Fecth data dailyLog
+            dailyLogService.getDailyLog(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.dailyLogs = response
+                    console.log(this.dailyLogs)
                 })
         },
 

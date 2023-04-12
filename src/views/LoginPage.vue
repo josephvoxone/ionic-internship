@@ -1,14 +1,14 @@
 <template>
     <ion-page>
         <ion-header :translucent="true">
-            <ion-toolbar >
+            <ion-toolbar>
                 <ion-title class="ion-text-center">LOGIN</ion-title>
             </ion-toolbar>
         </ion-header>
 
         <ion-content :fullscreen="true" class="ion-padding">
             <div id="container">
-                <ion-avatar class="ion-justify-content-center">
+                <ion-avatar class="avatar-log-center">
                     <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                 </ion-avatar>
                 <ion-item>
@@ -67,7 +67,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 #container {
     text-align: center;
     position: absolute;

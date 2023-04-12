@@ -15,13 +15,19 @@
       <ion-list>
         <ion-card v-for="(item, index) in dailyLog && kandangs" :key="index" mode="ios">
           <ion-item lines="none">
-            <ion-icon slot="start" :icon="logIn"></ion-icon>
+            <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>
               <h3>
                 {{ item.name }}
               </h3>
               <p>
                 {{ item.login }}
+              </p>
+              <p>
+                Kandang ID: {{ item.kandang ? item.kandang.id : 'N/A' }}
+              </p>
+              <p>
+                Kandang Address: {{ item.kandang ? item.kandang.address : 'N/A' }}
               </p>
             </ion-label>
             <ion-chip slot="end" :color="item.type == 'login' ? 'success' : 'warning'">
@@ -88,24 +94,30 @@ export default defineComponent({
             this.dailyLog = response
           }
         })
-      },
-      getKandang() {
-        // Fecth data history
-        kandangService.getKandang(this.params)
-          .then((response: any) => {
-            console.log(response)
-            this.kandangs = response
-            console.log(this.kandangs)
-            //Saving object data
-            // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
-            // tokenService.saveToken(response.token);
-            // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
-      })
     },
+    getKandang() {
+      // Fecth data kandangs table
+      kandangService.getKandang(this.params)
+        .then((response: any) => {
+          console.log(response)
+          this.kandangs = response
+          console.log(this.kandangs)
+
+          // Merge data from daily_log and kandangs tables based on the shared ID
+          this.dailyLog.forEach((dailyLogItem: any) => {
+            const kandangItem = this.kandangs.find((kandang: any) => kandang.id === dailyLogItem.id)
+            dailyLogItem.kandang = kandangItem
+          })
+          //Saving object data
+          // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
+          // tokenService.saveToken(response.token);
+          // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
+        })
     },
-    ionViewWillEnter() {
-      this.getDailyLog();
-      this.getKandang();
-    },
-  })
+  },
+  ionViewWillEnter() {
+    this.getDailyLog();
+    this.getKandang();
+  },
+})
 </script>

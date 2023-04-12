@@ -49,6 +49,10 @@ import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
 // import axios from 'axios';
 
+// Services
+import PplService from '@/common/services/ppl.service';
+import { ref } from 'vue';
+
 export default {
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader },
   setup() {
@@ -64,13 +68,29 @@ export default {
     //   .catch(error => {
     //     console.error(error);
     //   });
+    const name = ref()
+    const id = ref(1)
+
+    const getKandang = async (name: string) => {
+      console.log(name)
+      // Fecth data kandang
+      PplService.updateName(name, id.value)
+        .then((response: any) => {
+          console.log(response)
+        })
+    }
 
     const popupName = async () => {
       const alert = await alertController.create({
         header: 'Change Name',
-        buttons: ['OK'],
+        buttons: [{
+          text: 'OK',
+          role: 'confirm',
+          handler: (response) => { console.log(response); getKandang(response.name) }
+        }],
         inputs: [
           {
+            name: "name",
             placeholder: 'Input New Name',
             attributes: {
               maxlength: 15,
@@ -101,6 +121,8 @@ export default {
           },
         ],
       });
+
+
 
       await alert.present();
     };

@@ -80,6 +80,15 @@ export default {
         })
     }
 
+    const getOtherKandang = async (password: string) => {
+      console.log(password)
+      // Fecth data kandang
+      PplService.updatePassword(password, id.value)
+        .then((response: any) => {
+          console.log(response)
+        })
+    }
+
     const popupName = async () => {
       const alert = await alertController.create({
         header: 'Change Name',
@@ -105,7 +114,11 @@ export default {
     const popupPW = async () => {
       const alert = await alertController.create({
         header: 'Change Password',
-        buttons: ['OK'],
+        buttons: [{
+          text: 'OK',
+          role: 'confirm',
+          handler: (response) => { console.log(response); getOtherKandang(response.password) }
+        }],
         inputs: [
           {
             placeholder: 'Input Current Password',
@@ -121,8 +134,6 @@ export default {
           },
         ],
       });
-
-
 
       await alert.present();
     };

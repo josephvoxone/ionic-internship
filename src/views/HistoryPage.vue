@@ -13,7 +13,7 @@
       </ion-header>
 
       <ion-list>
-        <ion-card v-for="(item, index) in dailyLog && kandangs" :key="index" mode="ios">
+        <ion-card v-for="(item, index) in dailyLog && kandangs && karyawan" :key="index" mode="ios">
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>
@@ -49,6 +49,7 @@ import { defineComponent, ref } from 'vue';
 import historyService from '@/common/services/history.service';
 import dailyLogService from '@/common/services/dailyLog.service';
 import kandangService from '@/common/services/kandang.service';
+import karyawanService from '@/common/services/karyawan.service';
 
 export default defineComponent({
   name: "HistoryPage",
@@ -58,6 +59,7 @@ export default defineComponent({
     const params = ref({ type: '', q: '' })
     const dailyLog: any = ref([])
     const kandangs: any = ref([])
+    const karyawan: any = ref([])
 
     return {
       // variable
@@ -69,7 +71,8 @@ export default defineComponent({
       ionRouter,
       //arrayhistory
       dailyLog,
-      kandangs
+      kandangs,
+      karyawan
     }
   },
   methods: {
@@ -114,10 +117,30 @@ export default defineComponent({
           // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
         })
     },
+    getKaryawan() {
+      // Fecth data kandangs table
+      karyawanService.getKaryawan(this.params)
+        .then((response: any) => {
+          console.log(response)
+          this.karyawan = response
+          console.log(this.karyawan)
+
+          // Merge data from daily_log and kandangs tables based on the shared ID
+          this.dailyLog.forEach((dailyLogItem: any) => {
+            const karyawanItem = this.karyawan.find((karyawan: any) => karyawan.id === dailyLogItem.id)
+            dailyLogItem.karyawan = karyawanItem
+          })
+          //Saving object data
+          // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
+          // tokenService.saveToken(response.token);
+          // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
+        })
+    },
   },
   ionViewWillEnter() {
     this.getDailyLog();
     this.getKandang();
+    this.getKaryawan();
   },
 })
 </script>

@@ -20,6 +20,12 @@ class PplService {
             .catch(error => { throw error })
     }
 
+    updatePassword(password: any, id: number) {
+        return http.put(`/karyawan/${id}`, { password })
+            .then((res) => res.data.data[0])
+            .catch(error => { throw error })
+    }
+
     deletePromo(id: any) {
         return http.delete(`/example/${id}`)
     }

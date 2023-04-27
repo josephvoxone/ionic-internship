@@ -32,8 +32,8 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical"
-        v-for="(item, index) in kandangs" :key="index">
+      <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical" v-for="(item, index) in kandangs"
+        :key="index">
         <ion-item mode="ios" lines="none">
           <ion-img class="img-icon" slot="start" :src="require('@/assets/img/chicken.png')"></ion-img>
           <!-- <ion-thumbnail slot="start">
@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonSearchbar, IonLabel, IonSegmentButton, IonSegment, IonTabBar, IonTabButton, IonThumbnail, IonItem, IonCardContent, IonCard, useIonRouter, IonChip, IonAvatar, IonImg } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonSearchbar, IonLabel, IonSegmentButton, IonSegment, IonTabBar, IonTabButton, IonThumbnail, IonItem, IonCardContent, IonCard, useIonRouter, IonChip, IonAvatar, IonImg, } from '@ionic/vue';
 import { scan, person } from 'ionicons/icons'
 import { defineComponent, ref } from 'vue';
 
@@ -74,7 +74,6 @@ export default defineComponent({
     return {
       // variable
       params,
-
       // icons
       scan,
       person,
@@ -91,7 +90,7 @@ export default defineComponent({
       this.$router.push({
         path: '/report',
         query: {
-          kandangID: item.id
+          id: item.id
         }
       });
     },

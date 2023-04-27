@@ -6,9 +6,9 @@ const toast = {
     async presentToast(data: any) {
         const toast = await toastController.create({
             header: data?.header,
-            message: data?.msg,
+            message: data?.message,
             position: "bottom",
-            color: data?.color,
+            color: "success",
             duration: data?.duration || 2000,
             mode: "ios",
             buttons: [

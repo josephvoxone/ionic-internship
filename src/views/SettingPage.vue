@@ -69,6 +69,7 @@ export default {
     //     console.error(error);
     //   });
     const name = ref()
+    const password = ref()
     const id = ref(1)
 
     const getKandang = async (name: string) => {
@@ -121,12 +122,14 @@ export default {
         }],
         inputs: [
           {
+            type: "password",
             placeholder: 'Input Current Password',
             attributes: {
               maxlength: 15,
             },
           },
           {
+            type: "password",
             placeholder: 'Input New Password',
             attributes: {
               maxlength: 15,

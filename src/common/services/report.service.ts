@@ -9,9 +9,9 @@ class ReportService {
             .catch(error => { throw error })
     }
 
-    addPromo(params: any) {
-        return http.post(`/example`, params)
-            .then(response => response.data.data)
+    addReport(params: any) {
+        return http.post(`/daily_report`, params)
+            .then(response => response.data)
             .catch(error => { throw error })
     }
 

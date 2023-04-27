@@ -36,6 +36,7 @@
                         <ion-input v-model="report.reason" placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
+                {{ report }}
                 <ion-list :inset="true">
                     <ion-item>
                         <ion-label position="fixed">Depletion</ion-label>
@@ -50,7 +51,7 @@
                         <ion-input v-model="report.avg_bw" placeholder="Enter text"></ion-input>
                     </ion-item>
                 </ion-list>
-                <ion-button fill="outline" shape="round" expand="full">Submit</ion-button>
+                <ion-button fill="outline" shape="round" expand="full" @click="addReport(report)">Submit</ion-button>
             </div>
 
             <!-- History Segment -->
@@ -95,7 +96,7 @@
 </template>
 
 <script  lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController, useIonRouter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, modalController, useIonRouter, IonInput } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import ReportDetail from './ReportDetail.vue';
 import { useRoute } from 'vue-router';
@@ -107,7 +108,7 @@ import dailyLogService from '@/common/services/dailyLog.service';
 
 export default defineComponent({
     name: "ReportPage",
-    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, useIonRouter },
+    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonTabBar, IonThumbnail, IonTabButton, IonSegment, IonSegmentButton, IonSearchbar, IonTextarea, IonDatetime, IonDatetimeButton, IonModal, IonInput, useIonRouter },
 
     setup() {
         const segment = ref('report');
@@ -172,19 +173,19 @@ export default defineComponent({
     methods: {
         getKandang() {
             //nemanggil ID
-            kandangService.getDetailbyID(this.kandangID) 
+            kandangService.getDetailbyID(this.kandangID)
                 .then((response: any) => {
                     console.log(response)
                     this.kandangs = response
                     console.log(this.kandangs)
                 })
 
-                // kandangService.getKandang(this.params)
-                // .then((response: any) => {
-                //     console.log(response)
-                //     this.kandangs = response
-                //     console.log(this.kandangs)
-                // })
+            // kandangService.getKandang(this.params)
+            // .then((response: any) => {
+            //     console.log(response)
+            //     this.kandangs = response
+            //     console.log(this.kandangs)
+            // })
         },
 
         created() {
@@ -229,6 +230,17 @@ export default defineComponent({
                 })
         },
 
+        //Submit
+        addReport(params: any) {
+            console.log("parameter", params)
+            console.log("variable", this.params)
+            params.id_kandang = this.kandangID
+                // Fecth data kandang
+                reportService.addReport(params)
+                    .then((response: any) => {
+                        console.log(response)
+                    })
+        },
         ionViewWillEnter() {
             this.getReport();
             this.getKandang();

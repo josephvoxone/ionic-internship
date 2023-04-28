@@ -14,10 +14,6 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/tabs/kandang'
   },
   {
-    path: '/scan-barcode',
-    component: () => import('@/views/ScanBarcodePage.vue')
-  },
-  {
     path: '/report',
     component: () => import('@/views/ReportPage.vue')
   },
@@ -31,17 +27,17 @@ const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'kandang',
-        component: () => import('@/views/KandangPage.vue'),
+        component: () => import('@/views/TabKandang.vue'),
 
       },
 
       {
         path: 'history',
-        component: () => import('@/views/HistoryPage.vue')
+        component: () => import('@/views/TabHistory.vue')
       },
       {
         path: 'setting',
-        component: () => import('@/views/SettingPage.vue')
+        component: () => import('@/views/TabSetting.vue')
       }
     ]
   }

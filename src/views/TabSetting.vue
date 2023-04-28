@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
 // import axios from 'axios';
@@ -54,20 +54,9 @@ import PplService from '@/common/services/ppl.service';
 import { ref } from 'vue';
 
 export default {
-  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader },
+  name: "TabSetting",
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon },
   setup() {
-    // const endpoint = 'http://127.0.0.1:3333/karyawan/getData';
-    // const data = {
-    //   name: ''
-    // };
-
-    // axios.put(endpoint, data)
-    //   .then(response => {
-    //     console.log(response.data); // output hasil respons
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
     const name = ref()
     const password = ref()
     const id = ref(1)

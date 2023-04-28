@@ -50,7 +50,7 @@ import historyService from '@/common/services/history.service';
 import dailyLogService from '@/common/services/dailyLog.service';
 
 export default defineComponent({
-  name: "HistoryPage",
+  name: "TabHistory",
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonCard, IonItem, IonIcon, IonLabel, IonChip, useIonRouter },
   setup() {
     const ionRouter = useIonRouter()

@@ -22,6 +22,8 @@ import "@ionic/vue/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import "./theme/global.scss";
+
 // Apex Chart
 import VueApexCharts from "vue3-apexcharts";
 

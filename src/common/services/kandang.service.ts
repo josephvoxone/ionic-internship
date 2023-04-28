@@ -2,14 +2,12 @@ import http from "@/common/api/axios.service";
 
 class KandangService {
     getKandang(params: any) {
-        console.log('Service', params)
         return http.get(`/kandang`, { params })
             .then((res) => res.data)
             .catch(error => { throw error })
     }
 
     getDetailbyID(id: any) {
-        console.log('Service', id)
         return http.get(`/kandang/${id}`)
             .then((res) => res.data)
             .catch(error => { throw error })

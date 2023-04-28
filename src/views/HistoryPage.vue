@@ -13,21 +13,21 @@
       </ion-header>
 
       <ion-list>
-        <ion-card v-for="(item, index) in dailyLog && kandangs && karyawan" :key="index" mode="ios">
+        <ion-card v-for="(item, index) in dailyLog" :key="index" mode="ios">
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>
               <h3>
-                {{ item.name }}
+                {{ item.user.name }}
               </h3>
               <p>
                 {{ item.login }}
               </p>
               <p>
-                Kandang ID: {{ item.kandang ? item.kandang.id : 'N/A' }}
+                Kandang ID: {{ item.id_kandang }}
               </p>
               <p>
-                Kandang Address: {{ item.kandang ? item.kandang.address : 'N/A' }}
+                Kandang Address: {{ item.kandang.address }}
               </p>
             </ion-label>
             <ion-chip slot="end" :color="item.type == 'login' ? 'success' : 'warning'">
@@ -48,8 +48,6 @@ import { defineComponent, ref } from 'vue';
 // Services
 import historyService from '@/common/services/history.service';
 import dailyLogService from '@/common/services/dailyLog.service';
-import kandangService from '@/common/services/kandang.service';
-import karyawanService from '@/common/services/karyawan.service';
 
 export default defineComponent({
   name: "HistoryPage",
@@ -98,49 +96,9 @@ export default defineComponent({
           }
         })
     },
-    getKandang() {
-      // Fecth data kandangs table
-      kandangService.getKandang(this.params)
-        .then((response: any) => {
-          console.log(response)
-          this.kandangs = response
-          console.log(this.kandangs)
-
-          // Merge data from daily_log and kandangs tables based on the shared ID
-          this.dailyLog.forEach((dailyLogItem: any) => {
-            const kandangItem = this.kandangs.find((kandang: any) => kandang.id === dailyLogItem.id)
-            dailyLogItem.kandang = kandangItem
-          })
-          //Saving object data
-          // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
-          // tokenService.saveToken(response.token);
-          // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
-        })
-    },
-    getKaryawan() {
-      // Fecth data kandangs table
-      karyawanService.getKaryawan(this.params)
-        .then((response: any) => {
-          console.log(response)
-          this.karyawan = response
-          console.log(this.karyawan)
-
-          // Merge data from daily_log and kandangs tables based on the shared ID
-          this.dailyLog.forEach((dailyLogItem: any) => {
-            const karyawanItem = this.karyawan.find((karyawan: any) => karyawan.id === dailyLogItem.id)
-            dailyLogItem.karyawan = karyawanItem
-          })
-          //Saving object data
-          // userService.saveUser({ id: response.id, mtcompany_id: response.mtcompany_id, token: response.token });
-          // tokenService.saveToken(response.token);
-          // this.ionRouter.navigate({ path: '/tabs/home' }, 'forward', 'replace')
-        })
-    },
   },
   ionViewWillEnter() {
     this.getDailyLog();
-    this.getKandang();
-    this.getKaryawan();
   },
-})
+});
 </script>

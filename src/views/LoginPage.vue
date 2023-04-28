@@ -8,7 +8,7 @@
 
         <ion-content :fullscreen="true" class="ion-padding">
             <div id="container">
-                <ion-avatar class="avatar-log-center">
+                <ion-avatar class="avatar-log-center" style="display: flex; justify-content: center; align-items: center;">
                     <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                 </ion-avatar>
                 <ion-item>
@@ -81,5 +81,10 @@ export default defineComponent({
     margin: auto;
     width: 100px;
     height: 100px;
+}
+.avatar-log-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

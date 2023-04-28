@@ -12,7 +12,7 @@ class KandangService {
             .then((res) => res.data)
             .catch(error => { throw error })
     }
-
+ 
     addPromo(params: any) {
         return http.post(`/example`, params)
             .then(response => response.data.data)

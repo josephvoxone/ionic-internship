@@ -82,7 +82,7 @@ import { defineComponent, ref } from 'vue';
 import { chevronBackOutline } from 'ionicons/icons';
 import reportService from '@/common/services/report.service';
 import kandangService from '@/common/services/kandang.service';
-import dailyLogService from '@/common/services/dailyLog.service';
+import dailyLogService from '@/common/services/dailylog';
 
 export default defineComponent({
     name: 'Detail',

@@ -47,7 +47,7 @@ import { defineComponent, ref } from 'vue';
 
 // Services
 import historyService from '@/common/services/history.service';
-import dailyLogService from '@/common/services/dailyLog.service';
+import dailyLogService from '@/common/services/dailylog';
 
 export default defineComponent({
   name: "TabHistory",

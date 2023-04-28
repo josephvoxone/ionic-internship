@@ -164,7 +164,7 @@ import ReportCreate from "./ReportCreate.vue";
 // Services
 import reportService from "@/common/services/report.service";
 import kandangService from "@/common/services/kandang.service";
-import dailyLogService from "@/common/services/dailyLog.service";
+import dailyLogService from "@/common/services/dailylog";
 import VueApexCharts from "vue3-apexcharts";
 import { qrCode } from "ionicons/icons";
 

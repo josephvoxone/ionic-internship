@@ -31,7 +31,7 @@
           <ion-label>Setting</ion-label>
         </ion-list-header>
 
-        <ion-item button @click="$router.push('/login')">
+        <ion-item button @click="logout()">
           <ion-icon slot="start" :icon="logOut"></ion-icon>
           <ion-label>
             <h3>Log Out</h3>
@@ -44,13 +44,11 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, useIonRouter } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
-// import axios from 'axios';
-
 // Services
-import PplService from '@/common/services/ppl.service';
+import KaryawanService from '@/common/services/karyawan.service';
 import { ref } from 'vue';
 
 export default {
@@ -60,11 +58,12 @@ export default {
     const name = ref()
     const password = ref()
     const id = ref(1)
+    const ionRouter = useIonRouter()
 
     const getKandang = async (name: string) => {
       console.log(name)
       // Fecth data kandang
-      PplService.updateName(name, id.value)
+      KaryawanService.updateName(name, id.value)
         .then((response: any) => {
           console.log(response)
         })
@@ -73,7 +72,7 @@ export default {
     const getOtherKandang = async (password: string) => {
       console.log(password)
       // Fecth data kandang
-      PplService.updatePassword(password, id.value)
+      KaryawanService.updatePassword(password, id.value)
         .then((response: any) => {
           console.log(response)
         })
@@ -130,11 +129,39 @@ export default {
       await alert.present();
     };
 
-    return {
-      popupName, popupPW,
+    const logout = async () => {
+      const alert = await alertController.create({
+        mode: 'ios',
+        cssClass: 'alert-apps',
+        header: 'Keluar',
+        message: 'Apakah anda yakin ingin keluar?',
+        buttons: [
+          {
+            role: 'cancel',
+            text: 'Batal',
+          },
+          {
+            role: 'oke',
+            text: 'Iya',
+            handler: () => {
+              ionRouter.navigate({ path: '/login' }, 'back', 'replace');
+              localStorage.clear();
+            },
+          },
+        ],
+      });
+      return alert.present();
+    }
 
+
+    return {
+      popupName, popupPW, logout,
+
+      ionRouter,
       logOut, documentLock, person
     };
+  },
+  methods: {
   },
 };
 </script>

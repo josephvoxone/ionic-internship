@@ -13,28 +13,25 @@
                 </ion-avatar>
                 <ion-item>
                     <ion-icon :src="person"></ion-icon>
-                    <ion-input type="text" placeholder="Username"></ion-input>
+                    <ion-input type="email" placeholder="Email" v-model="user.email"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-icon :src="lockClosed"></ion-icon>
-                    <ion-input type="password" placeholder="Password"></ion-input>
+                    <ion-input type="password" placeholder="Password" v-model="user.password"></ion-input>
                 </ion-item>
-                <ion-button shape="round" expand="full" @click="$router.push('/tabs/kandang')">Login</ion-button>
+                <ion-button shape="round" expand="full" @click="logIn()">Login</ion-button>
             </div>
-            <login-panel @do-login="doLogin"></login-panel>
         </ion-content>
     </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonInput, IonButton, IonItem, useIonRouter } from '@ionic/vue';
 import { person, lockClosed } from 'ionicons/icons';
-import { defineComponent } from 'vue';
-import LoginPanel from "./components/LoginPanel.vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
-import router from '@/router';
-
+import { defineComponent, ref } from 'vue';
+import authService from '@/common/services/auth.service';
+import tokenService from '@/common/api/token.service';
+import sessionService from '@/common/api/session.service';
 export default defineComponent({
     name: "LoginPage",
     components: {
@@ -43,25 +40,24 @@ export default defineComponent({
         IonToolbar,
         IonTitle,
         IonContent,
-        IonIcon,
-        // LoginPanel
+        IonIcon, IonInput, IonButton, IonItem
     },
     setup() {
-        const store = useStore();
-        const doLogin = async (payload: any) => {
-            const { email, password } = payload;
-            try {
-                await store.dispatch("login", { email, password });
-                router.replace("/tabs/kandang");
-                return null;
-            } catch (error) {
-                alert(error);
-            }
-        };
+        const user: any = ref({})
+        const router = useIonRouter()
+        const logIn = () => {
+            authService.login(user.value)
+                .then((response: any) => {
+                    tokenService.saveToken(response.token)
+                    router.navigate('/tabs/', 'root', 'replace')
+                })
+        }
+
         return {
-            doLogin,
+            user,
             person,
-            lockClosed
+            lockClosed,
+            logIn
         }
     }
 })
@@ -82,9 +78,10 @@ export default defineComponent({
     width: 100px;
     height: 100px;
 }
+
 .avatar-log-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 </style>

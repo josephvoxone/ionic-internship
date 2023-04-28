@@ -6,9 +6,9 @@
           <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-title>Report History</ion-title>
-        <ion-buttons slot="end" @click="openModal">
+        <ion-buttons slot="end" @click="openCreateReport">
           <ion-button>
-            <ion-chip mode="ios">Add Report</ion-chip>
+            <ion-chip mode="ios">Create</ion-chip>
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
@@ -26,31 +26,50 @@
     <ion-content :fullscreen="true" class="ion-padding">
       <!-- Report Segment -->
       <div v-if="segment == 'stats'">
-        <ion-list :inset="true">
-          <ion-item class="ion-no-padding">
-            <ion-label position="stacked">Tanggal Report</ion-label>
-            <ion-input v-model="report.date" type="date" placeholder="Masukkan tanggal report"></ion-input>
-          </ion-item>
-          <ion-item class="ion-no-padding">
-            <ion-label position="stacked">Description</ion-label>
-            <ion-textarea v-model="report.reason" type="text" placeholder="Masukkan kondisi kandang"></ion-textarea>
-          </ion-item>
-          <ion-item class="ion-no-padding">
-            <ion-label position="stacked">Depletion</ion-label>
-            <ion-input v-model="report.depletion" type="text" placeholder="Masukkan jml. kematian"></ion-input>
-          </ion-item>
-          <ion-item class="ion-no-padding">
-            <ion-label position="stacked">Feed Intake</ion-label>
-            <ion-input v-model="report.feed_intake" type="text" placeholder="Masukkan rata-rata pakan"></ion-input>
-          </ion-item>
-          <ion-item class="ion-no-padding">
-            <ion-label position="stacked">Avg bw</ion-label>
-            <ion-input v-model="report.avg_bw" type="text" placeholder="Masukkan rata-rata body weight"></ion-input>
-          </ion-item>
-        </ion-list>
-        <ion-button mode="ios" fill="solid" shape="round" expand="full" @click="addReport(report)">
-          Create Report
-        </ion-button>
+        <ion-list-header>
+          <ion-label>
+            <h2><strong>Detail Kandang</strong></h2>
+          </ion-label>
+        </ion-list-header>
+        <ion-grid class="ion-padding-start">
+          <ion-row>
+            <ion-col>
+              <ion-label>
+                <p>Name</p>
+                <h2>{{ kandang.name }}</h2>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <p>City</p>
+                <h2>{{ kandang.city }}</h2>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-label>
+                <p>Status</p>
+                <h2>{{ kandang.status ? 'Active' : 'Inactive' }}</h2>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <p>Type</p>
+                <h2 class="ion-text-capitalize">{{ kandang.type }}</h2>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <ion-list-header>
+          <ion-label>
+            <h2><strong>Statistik Kandang</strong></h2>
+          </ion-label>
+        </ion-list-header>
+        <div id="chart">
+          <apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+        </div>
       </div>
 
       <!-- History Segment -->
@@ -86,6 +105,14 @@
         </ion-card>
       </div>
     </ion-content>
+
+    <IonFooter class="ion-no-border">
+      <ion-toolbar class="ion-padding">
+        <ion-button mode="ios" color="dark" fill="solid" shape="round" expand="block" @click="openBarcode(id)">
+          Lihat Barcode &nbsp; <ion-icon :icon="qrCode"></ion-icon>
+        </ion-button>
+      </ion-toolbar>
+    </IonFooter>
   </ion-page>
 </template>
 
@@ -118,21 +145,27 @@ import {
   modalController,
   useIonRouter,
   IonInput,
-  IonChip
+  IonChip,
+  IonFooter, IonGrid, IonRow, IonCol, IonIcon
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 // Page
 import ReportDetail from "./ReportDetail.vue";
+import BarcodePage from "./BarcodePage.vue";
+import ReportCreate from "./ReportCreate.vue";
+
 // Services
 import reportService from "@/common/services/report.service";
 import kandangService from "@/common/services/kandang.service";
 import dailyLogService from "@/common/services/dailyLog.service";
-import ReportCreate from "./ReportCreate.vue";
+import VueApexCharts from "vue3-apexcharts";
+import { qrCode } from "ionicons/icons";
 
 export default defineComponent({
   name: "ReportPage",
   components: {
+    apexchart: VueApexCharts,
     IonPage,
     IonHeader,
     IonToolbar,
@@ -160,14 +193,93 @@ export default defineComponent({
     IonInput,
     IonChip,
     useIonRouter,
+    IonFooter, IonGrid, IonRow, IonCol, IonIcon
   },
-
+  data() {
+    const series: any = [
+      {
+        name: "Deplesi",
+        data: [
+          ['2023-04-01', 31],
+          ['2023-04-02', 40],
+          ['2023-04-03', 28],
+          ['2023-04-04', 51],
+          ['2023-04-05', 42],
+          ['2023-04-06', 109],
+          ['2023-04-07', 100]
+        ],
+      },
+      {
+        name: "Feed Intake",
+        data: [
+          ['2023-04-01', 11],
+          ['2023-04-02', 32],
+          ['2023-04-03', 45],
+          ['2023-04-04', 32],
+          ['2023-04-05', 34],
+          ['2023-04-06', 52],
+          ['2023-04-07', 41]
+        ],
+      },
+      {
+        name: "Avg. BW",
+        data: [
+          ['2023-04-01', 11],
+          ['2023-04-02', 22],
+          ['2023-04-03', 33],
+          ['2023-04-04', 32],
+          ['2023-04-05', 55],
+          ['2023-04-06', 52],
+          ['2023-04-07', 11]
+        ]
+      }
+    ]
+    const chartOptions: any = {
+      chart: {
+        type: 'area',
+        height: 350,
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
+        events: {
+          selection: function (chart: any, e: { xaxis: { min: string | number | Date; }; }) {
+            console.log(new Date(e.xaxis.min))
+          }
+        },
+      },
+      colors: ['#008FFB', '#00E396', '#CED4DC'],
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          opacityFrom: 0.6,
+          opacityTo: 0.8,
+        }
+      },
+      legend: {
+        position: 'top',
+        horizontalAlign: 'left'
+      },
+      xaxis: {
+        type: 'datetime'
+      },
+    }
+    return {
+      series, chartOptions
+    }
+  },
   setup() {
     const segment = ref("stats");
     const ionRouter = useIonRouter();
     const params = ref({ type: "all", q: "" });
     const reports: any = ref([]);
-    const kandangs: any = ref([]);
+    const kandang: any = ref([]);
     const dailyLogs: any = ref([]);
     const report: any = ref({});
     const id = ref();
@@ -176,13 +288,15 @@ export default defineComponent({
     id.value = route.query.id || "";
 
     return {
+      qrCode,
+
       segment,
       message:
         "This modal example uses the modalController to present and dismiss modals.",
       // variable
       params,
       reports,
-      kandangs,
+      kandang,
       dailyLogs,
       id,
       selectedKandang,
@@ -191,10 +305,6 @@ export default defineComponent({
       ionRouter,
     };
   },
-  created() {
-    // Ambil data kandang yang dikirimkan melalui query params
-    this.id = this.$route.query.id;
-  },
   methods: {
     ionViewWillEnter() {
       this.getReport();
@@ -202,9 +312,7 @@ export default defineComponent({
     },
     getKandang() {
       kandangService.getDetailbyID(this.id).then((response: any) => {
-        console.log(response);
-        this.kandangs = response;
-        console.log(this.kandangs);
+        this.kandang = response;
       });
     },
     segmentChanged(ev: CustomEvent) {
@@ -242,24 +350,29 @@ export default defineComponent({
       });
     },
 
-    //Create Report
-    addReport(params: any) {
-      params.id_kandang = this.id;
-      reportService.addReport(params).then((response: any) => {
-        console.log(response);
-      });
-    },
-    async openModal() {
+    async openCreateReport() {
       const modal = await modalController.create({
         component: ReportCreate,
-        mode: 'ios',
         breakpoints: [0, 0.7, 1],
         initialBreakpoint: 0.7,
         componentProps: { id: this.id }
       });
       modal.present();
 
-      const { data, role } = await modal.onWillDismiss();
+      const { data } = await modal.onWillDismiss();
+      if (data) { this.ionViewWillEnter() }
+    },
+
+    async openBarcode(identity: any) {
+      const modal = await modalController.create({
+        component: BarcodePage,
+        breakpoints: [0, 0.5, 0.7],
+        initialBreakpoint: 0.5,
+        componentProps: { id: identity }
+      });
+      modal.present();
+
+      const { data } = await modal.onWillDismiss();
       if (data) { this.ionViewWillEnter() }
     },
 
@@ -284,5 +397,9 @@ ion-textarea.custom-textarea {
 ion-item.line-buttom {
   --padding-end: 0px;
   --inner-padding-end: 0px;
+}
+
+ion-col {
+  padding: 0;
 }
 </style>

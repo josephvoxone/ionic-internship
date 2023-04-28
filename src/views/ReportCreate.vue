@@ -1,15 +1,21 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title class="ion-text-center">Add New Report</ion-title>
+        <ion-header class="ion-no-border">
+            <ion-toolbar color="white">
+                <ion-list-header class="ion-no-padding">
+                    <ion-label class="ion-margin-top ion-text-center">
+                        <h2>Create Report</h2>
+                        <p>Isi formulir untuk menambahkan report</p>
+                    </ion-label>
+                </ion-list-header>
             </ion-toolbar>
         </ion-header>
         <ion-content :fullscreen="true" class="ion-padding">
             <ion-list :inset="true">
                 <ion-item class="ion-no-padding">
                     <ion-label position="stacked">Tanggal Report</ion-label>
-                    <ion-input v-model="report.date" type="date" placeholder="Masukkan tanggal report"></ion-input>
+                    <ion-input v-model="report.date" type="date" :max="new Date().toISOString().substring(0, 10)"
+                        placeholder="Masukkan tanggal report"></ion-input>
                 </ion-item>
                 <ion-item class="ion-no-padding">
                     <ion-label position="stacked">Description</ion-label>
@@ -30,7 +36,8 @@
                         placeholder="Masukkan rata-rata body weight"></ion-input>
                 </ion-item>
             </ion-list>
-            <ion-button mode="ios" fill="solid" shape="round" expand="full" @click="addReport(report)" :disabled="loading">
+            <ion-button mode="ios" fill="solid" shape="round" color="dark" expand="full" @click="addReport(report)"
+                :disabled="loading">
                 <template v-if="!loading">
                     Create Report
                 </template>

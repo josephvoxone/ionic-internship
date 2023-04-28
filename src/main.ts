@@ -22,6 +22,8 @@ import "@ionic/vue/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+// Apex Chart
+import VueApexCharts from "vue3-apexcharts";
 
 const app = createApp(App)
   .use(IonicVue, {
@@ -29,6 +31,7 @@ const app = createApp(App)
     navAnimation: iosTransitionAnimation,
     backButtonText: null,
   })
+  .use(VueApexCharts)
   .use(router);
 
 router.isReady().then(() => {

@@ -6,6 +6,7 @@ const http = axios.create({
     baseURL: `${process.env.VUE_APP_API}`,
     headers: {
         "Content-Type": "application/json",
+        "Identifier": 1,
     },
     timeout: 30000 //timeout 30s
 });

@@ -26,9 +26,12 @@
     <ion-content :fullscreen="true" class="ion-padding">
       <!-- Report Segment -->
       <div v-if="segment == 'stats'">
-        <ion-list-header>
+        <ion-list-header class="ion-margin-bottom">
           <ion-label>
-            <h2><strong>Detail Kandang</strong></h2>
+            <h2><strong>Kandang</strong></h2>
+            <ion-note>
+              Informasi kandang
+            </ion-note>
           </ion-label>
         </ion-list-header>
         <ion-grid class="ion-padding-start">
@@ -62,9 +65,12 @@
           </ion-row>
         </ion-grid>
 
-        <ion-list-header>
+        <ion-list-header class="ion-margin-vertical">
           <ion-label>
             <h2><strong>Statistik Kandang</strong></h2>
+            <ion-note>
+              30 hari terakhir
+            </ion-note>
           </ion-label>
         </ion-list-header>
         <div id="chart">
@@ -146,7 +152,7 @@ import {
   useIonRouter,
   IonInput,
   IonChip,
-  IonFooter, IonGrid, IonRow, IonCol, IonIcon
+  IonFooter, IonGrid, IonRow, IonCol, IonIcon, IonNote
 } from "@ionic/vue";
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
@@ -193,47 +199,10 @@ export default defineComponent({
     IonInput,
     IonChip,
     useIonRouter,
-    IonFooter, IonGrid, IonRow, IonCol, IonIcon
+    IonFooter, IonGrid, IonRow, IonCol, IonIcon, IonNote
   },
   data() {
-    const series: any = [
-      {
-        name: "Deplesi",
-        data: [
-          ['2023-04-01', 31],
-          ['2023-04-02', 40],
-          ['2023-04-03', 28],
-          ['2023-04-04', 51],
-          ['2023-04-05', 42],
-          ['2023-04-06', 109],
-          ['2023-04-07', 100]
-        ],
-      },
-      {
-        name: "Feed Intake",
-        data: [
-          ['2023-04-01', 11],
-          ['2023-04-02', 32],
-          ['2023-04-03', 45],
-          ['2023-04-04', 32],
-          ['2023-04-05', 34],
-          ['2023-04-06', 52],
-          ['2023-04-07', 41]
-        ],
-      },
-      {
-        name: "Avg. BW",
-        data: [
-          ['2023-04-01', 11],
-          ['2023-04-02', 22],
-          ['2023-04-03', 33],
-          ['2023-04-04', 32],
-          ['2023-04-05', 55],
-          ['2023-04-06', 52],
-          ['2023-04-07', 11]
-        ]
-      }
-    ]
+    const series: any = []
     const chartOptions: any = {
       chart: {
         type: 'area',
@@ -309,10 +278,16 @@ export default defineComponent({
     ionViewWillEnter() {
       this.getReport();
       this.getKandang();
+      this.getStats();
     },
     getKandang() {
       kandangService.getDetailbyID(this.id).then((response: any) => {
         this.kandang = response;
+      });
+    },
+    getStats() {
+      reportService.getStatsReport(this.id).then((response: any) => {
+        this.series = response;
       });
     },
     segmentChanged(ev: CustomEvent) {
@@ -331,7 +306,6 @@ export default defineComponent({
         this.message = `Hello, ${data}!`;
       }
     },
-
     getReport() {
       // Fecth data Report
       reportService.getReport(this.params).then((response: any) => {

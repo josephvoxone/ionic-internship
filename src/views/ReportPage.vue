@@ -81,11 +81,11 @@
       <!-- History Segment -->
       <div v-if="segment == 'history'">
         <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
-          v-for="(item, index) in filteredReports" :key="index">
+          v-for="(item, index) in dailyLogs" :key="index">
           <!-- Tampilkan nama kandang -->
           <ion-item lines="none">
             <ion-label>
-              <p>{{ item.name }}</p>
+              <p>{{ item.kandang.name }}</p>
             </ion-label>
             <ion-label slot="end">
               <p>{{ item.created_at }}</p>
@@ -97,9 +97,9 @@
             </ion-thumbnail>
             <ion-label>
               <h2>
-                {{ item.name }}
+                {{ item.user.name }}
               </h2>
-              <p>{{ item.city }}</p>
+              <p>{{ item.kandang.city }}</p>
             </ion-label>
           </ion-item>
           <ion-item lines="none">

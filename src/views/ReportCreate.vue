@@ -44,7 +44,6 @@
                 <template v-else>
                     <ion-spinner name="crescent"></ion-spinner>
                 </template>
-
             </ion-button>
         </ion-content>
     </ion-page>

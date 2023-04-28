@@ -1,37 +1,45 @@
 <template>
     <ion-page>
-        <ion-header :translucent="true">
-            <ion-toolbar>
-                <ion-title class="ion-text-center">LOGIN</ion-title>
-            </ion-toolbar>
-        </ion-header>
-
         <ion-content :fullscreen="true" class="ion-padding">
-            <div id="container">
-                <ion-avatar class="avatar-log-center" style="display: flex; justify-content: center; align-items: center;">
-                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
-                </ion-avatar>
-                <ion-item>
-                    <ion-icon :src="person"></ion-icon>
-                    <ion-input type="email" placeholder="Email" v-model="user.email"></ion-input>
-                </ion-item>
-                <ion-item>
-                    <ion-icon :src="lockClosed"></ion-icon>
-                    <ion-input type="password" placeholder="Password" v-model="user.password"></ion-input>
-                </ion-item>
-                <ion-button shape="round" expand="full" @click="logIn()">Login</ion-button>
-            </div>
+            <ion-img class="img-logo" :src="require('@/assets/img/japfa.png')"></ion-img>
+            <ion-img class="img-icon" :src="require('@/assets/img/graph.png')"></ion-img>
         </ion-content>
+        <ion-footer class="ion-no-border">
+            <ion-toolbar class="ion-padding">
+                <h2 class="quote">
+                    Semua dalam <strong>satu genggaman</strong>, untuk peternak.
+                </h2>
+                <ion-item fill="outline" class="ion-margin-bottom">
+                    <ion-label position="stacked">Email</ion-label>
+                    <ion-input type="email" placeholder="Masukkan emailmu" v-model="user.email"></ion-input>
+                </ion-item>
+                <ion-item fill="outline" class="ion-margin-bottom">
+                    <ion-label position="stacked">Password</ion-label>
+                    <ion-input type="password" placeholder="Masukkan passwordmu" v-model="user.password"></ion-input>
+                </ion-item>
+                <ion-button color="dark" shape="round" expand="block" mode="ios" @click="logIn()" :disabled="loading">
+                    <template v-if="!loading">
+                        Masuk sebagai
+                        &nbsp;<ion-badge color="primary"><strong>Petugas</strong></ion-badge>
+                    </template>
+                    <template v-else>
+                        <ion-spinner name="crescent"></ion-spinner>
+                    </template>
+                </ion-button>
+            </ion-toolbar>
+            <ion-toolbar class="ion-text-center" color="light">
+                <p>Belum punya akun? <strong><u>Daftar Sekarang!</u></strong></p>
+            </ion-toolbar>
+        </ion-footer>
     </ion-page>
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonInput, IonButton, IonItem, useIonRouter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge, useIonRouter } from '@ionic/vue';
 import { person, lockClosed } from 'ionicons/icons';
 import { defineComponent, ref } from 'vue';
 import authService from '@/common/services/auth.service';
 import tokenService from '@/common/api/token.service';
-import sessionService from '@/common/api/session.service';
 export default defineComponent({
     name: "LoginPage",
     components: {
@@ -40,23 +48,27 @@ export default defineComponent({
         IonToolbar,
         IonTitle,
         IonContent,
-        IonIcon, IonInput, IonButton, IonItem
+        IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge,
     },
     setup() {
         const user: any = ref({})
         const router = useIonRouter()
+        const loading = ref(false)
+
         const logIn = () => {
+            loading.value = true
             authService.login(user.value)
                 .then((response: any) => {
                     tokenService.saveToken(response.token)
                     router.navigate('/tabs/', 'root', 'replace')
-                })
+                }).finally(() => loading.value = false)
         }
 
         return {
             user,
             person,
             lockClosed,
+            loading,
             logIn
         }
     }
@@ -64,13 +76,18 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-#container {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 30%;
-    transform: translateY(-50%);
+.img-logo {
+    width: 60px;
+    margin: auto;
+}
+
+.img-icon {
+    width: 80vw;
+    margin: auto;
+}
+
+.quote {
+    font-weight: 300;
 }
 
 .avatar {

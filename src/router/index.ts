@@ -80,8 +80,9 @@ router.beforeEach(async (to, from, next) => {
       next();
     })
     .catch((e) => {
+      console.log(e)
       // If token not available, expired or not found
-      if (e.response.status === 401) {
+      if (e?.response?.status === 401) {
         localStorage.clear();
       }
 

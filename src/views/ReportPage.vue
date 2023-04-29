@@ -80,8 +80,8 @@
 
       <!-- History Segment -->
       <div v-if="segment == 'history'">
-        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical"
-          v-for="(item, index) in dailyLogs" :key="index">
+        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLogs"
+          :key="index">
           <!-- Tampilkan nama kandang -->
           <ion-item lines="none">
             <ion-label>
@@ -309,18 +309,14 @@ export default defineComponent({
     getReport() {
       // Fecth data Report
       reportService.getReport(this.params).then((response: any) => {
-        console.log(response);
         this.reports = response;
-        console.log(this.reports);
       });
     },
 
     getDailyLog() {
       // Fecth data dailyLog
       dailyLogService.getDailyLog(this.params).then((response: any) => {
-        console.log(response);
         this.dailyLogs = response;
-        console.log(this.dailyLogs);
       });
     },
 

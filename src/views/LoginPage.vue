@@ -7,7 +7,7 @@
         <ion-footer class="ion-no-border">
             <ion-toolbar class="ion-padding">
                 <h2 class="quote">
-                    Semua dalam <strong>satu genggaman</strong>, untuk peternak.
+                    Semua dalam <strong>satu genggaman</strong>, untuk PPL.
                 </h2>
                 <ion-item fill="outline" class="ion-margin-bottom">
                     <ion-label position="stacked">Email</ion-label>

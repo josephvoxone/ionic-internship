@@ -6,7 +6,7 @@ const sessionService = {
   },
 
   getSession() {
-    return localStorage.getItem(SESSION_KEY) || ({} as any);
+    return JSON.parse(localStorage.getItem(SESSION_KEY) || ({} as any));
   },
 
   saveSession(result: any) {

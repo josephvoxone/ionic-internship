@@ -34,3 +34,5 @@ npm-debug.log*
 /.env.ciomaspp
 /.env.local
 /package.json
+
+resources/android/**/*

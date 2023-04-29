@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge, useIonRouter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge, IonSpinner, IonImg, useIonRouter } from '@ionic/vue';
 import { person, lockClosed } from 'ionicons/icons';
 import { defineComponent, ref } from 'vue';
 import authService from '@/common/services/auth.service';
@@ -48,7 +48,7 @@ export default defineComponent({
         IonToolbar,
         IonTitle,
         IonContent,
-        IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge,
+        IonIcon, IonInput, IonButton, IonItem, IonLabel, IonFooter, IonBadge, IonSpinner, IonImg,
     },
     setup() {
         const user: any = ref({})
@@ -83,7 +83,7 @@ export default defineComponent({
 
 .img-icon {
     width: 80vw;
-    margin: auto;
+    margin: 1rem auto 0;
 }
 
 .quote {

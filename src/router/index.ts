@@ -3,6 +3,7 @@ import { RouteRecordRaw } from "vue-router";
 import TabsPage from "../views/TabsPage.vue";
 import http from "@/common/api/axios.service";
 import sessionService from "@/common/api/session.service";
+import tokenService from "@/common/api/token.service";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -12,6 +13,7 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/",
+    name: "default",
     redirect: "/tabs/kandang",
     meta: {
       requiresAuth: true,
@@ -80,7 +82,7 @@ router.beforeEach(async (to, from, next) => {
       next();
     })
     .catch((e) => {
-      console.log(e)
+      console.log(e);
       // If token not available, expired or not found
       if (e?.response?.status === 401) {
         localStorage.clear();
@@ -94,4 +96,19 @@ router.beforeEach(async (to, from, next) => {
       });
     });
 });
+
+router.beforeResolve(async (to, from, next) => {
+  // If the user is already logged in
+  const publicPages = ["/login", "/register", "/forgot-password"];
+  const authpage = publicPages.includes(to.path);
+  const isLogin = tokenService.getToken();
+  if (authpage && isLogin) {
+    // Redirect to the home page instead
+    next({ name: "default" });
+  } else {
+    // Continue to the login page
+    next();
+  }
+});
+
 export default router;

@@ -23,7 +23,7 @@ http.interceptors.request.use(
     };
     return config;
   },
-  async (error) => {
+  async (error: any) => {
     // If token doesnt work
     if (error.response.status === 401 && !error.config._retry) {
       error.config._retry = true;
@@ -38,7 +38,7 @@ http.interceptors.request.use(
 // When response you can use manipulate data
 http.interceptors.response.use(
   async (config) => config,
-  (error) => {
+  (error: any) => {
     // console.error(error.config)
     if (error.code === "ECONNABORTED") {
       controller.toast.errorToast({
@@ -60,7 +60,7 @@ http.interceptors.response.use(
           error?.response?.data?.data ||
           error?.response?.data?.msg,
       });
-      console.error("Request Error", error.config.url);
+      // console.error("Request Error", error?.config?.url);
     }
     return Promise.reject(error);
   }

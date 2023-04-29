@@ -2,11 +2,11 @@ const SESSION_KEY = "user";
 
 const sessionService = {
   getID() {
-    return this.getSession().id;
+    return this.getSession()?.id;
   },
 
   getSession() {
-    return JSON.parse(localStorage.getItem(SESSION_KEY) || ({} as any));
+    return JSON.parse(localStorage.getItem(SESSION_KEY) || (null as any));
   },
 
   saveSession(result: any) {

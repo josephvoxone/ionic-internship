@@ -150,7 +150,6 @@ export default defineComponent({
       });
     },
     async startScan(): Promise<void> {
-      this.$router.push({ path: "/scan-barcode" })
       if (!this.isSupported) {
         const alert = await alertController.create({
           header: "Device tidak didukung",
@@ -173,13 +172,12 @@ export default defineComponent({
         await alert.present();
         return;
       }
-      this.$router.push({ path: "/scan-barcode" })
 
-      // await BarcodeScanner.scan()
-      //   .then((barcode: any) => {
-      //     this.gotoReport({ id: barcode[0].rawValue });
-      //   })
-      //   .catch(e => this.$router.replace({ path: "/scan-barcode" }));
+      await BarcodeScanner.scan()
+        .then((barcode: any) => {
+          this.gotoReport({ id: barcode[0].rawValue });
+        })
+        .catch(e => this.$router.push({ path: "/scan-barcode" }));
     },
 
     async requestPermissions(): Promise<boolean> {

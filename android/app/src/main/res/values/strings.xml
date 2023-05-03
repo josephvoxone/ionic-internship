@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Farmlace</string>
+    <string name="title_activity_main">Farmlace</string>
+    <string name="package_name">japfa.farmlace.id</string>
+    <string name="custom_url_scheme">japfa.farmlace.id</string>
+</resources>

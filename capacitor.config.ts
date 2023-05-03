@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'app',
+  appId: 'japfa.farmlace.id',
+  appName: 'Farmlace',
   webDir: 'dist',
   bundledWebRuntime: false
 };

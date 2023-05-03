@@ -13,7 +13,7 @@
       </ion-header>
 
       <ion-list>
-        <ion-card v-for="(item, index) in dailyLog" :key="index" mode="ios">
+        <ion-card v-for="(item, index) in dailyLog  " :key="index" mode="ios">
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>

@@ -3,7 +3,7 @@
     <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button></ion-back-button>
+          <ion-back-button href="/tabs/kandang"></ion-back-button>
         </ion-buttons>
         <ion-title>Report History</ion-title>
         <ion-buttons slot="end" @click="openCreateReport">

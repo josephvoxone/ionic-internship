@@ -2,7 +2,6 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <!-- <ion-button @click="gotoBarcode()">           -->
         <ion-avatar slot="start">
           <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
         </ion-avatar>
@@ -43,7 +42,7 @@
             <p>{{ item.city }}</p>
           </ion-label>
           <ion-chip slot="end" :color="item.type == 'open' ? 'success' : 'warning'">
-            {{ item.type == 'open' ? 'Open House' : 'Closed House' }}
+            {{ item.type == "open" ? "Open House" : "Closed House" }}
           </ion-chip>
         </ion-item>
       </ion-card>
@@ -52,24 +51,73 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonSearchbar, IonLabel, IonSegmentButton, IonSegment, IonTabBar, IonTabButton, IonThumbnail, IonItem, IonCardContent, IonCard, useIonRouter, IonChip, IonAvatar, IonImg, alertController, } from '@ionic/vue';
-import { scan, person } from 'ionicons/icons'
-import { defineComponent, ref } from 'vue';
+import {
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonIcon,
+  IonButton,
+  IonButtons,
+  IonSearchbar,
+  IonLabel,
+  IonSegmentButton,
+  IonSegment,
+  IonTabBar,
+  IonTabButton,
+  IonThumbnail,
+  IonItem,
+  IonCardContent,
+  IonCard,
+  useIonRouter,
+  IonChip,
+  IonAvatar,
+  IonImg,
+  alertController,
+} from "@ionic/vue";
+import { scan, person } from "ionicons/icons";
+import { defineComponent, ref } from "vue";
 
 // Services
-import kandangService from '@/common/services/kandang.service';
-import { BarcodeFormat, BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
-import chicken from '@/assets/img/chicken.png';
+import kandangService from "@/common/services/kandang.service";
+import {
+  BarcodeFormat,
+  BarcodeScanner,
+} from "@capacitor-mlkit/barcode-scanning";
+import chicken from "@/assets/img/chicken.png";
 
 export default defineComponent({
   name: "TabKandang",
-  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonIcon, IonButton, IonButtons, IonSearchbar, IonLabel, IonSegmentButton, IonSegment, IonTabBar, IonTabButton, IonThumbnail, IonItem, IonCardContent, IonCard, IonChip, IonAvatar, IonImg },
+  components: {
+    IonPage,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonIcon,
+    IonButton,
+    IonButtons,
+    IonSearchbar,
+    IonLabel,
+    IonSegmentButton,
+    IonSegment,
+    IonTabBar,
+    IonTabButton,
+    IonThumbnail,
+    IonItem,
+    IonCardContent,
+    IonCard,
+    IonChip,
+    IonAvatar,
+    IonImg,
+  },
   setup() {
-    const ionRouter = useIonRouter()
-    const params = ref({ type: 'all', q: '' })
-    const kandangs: any = ref([])
-    const kandangID = ref()
-    const isSupported = ref(false)
+    const ionRouter = useIonRouter();
+    const params = ref({ type: "all", q: "" });
+    const kandangs: any = ref([]);
+    const kandangID = ref();
+    const isSupported = ref(false);
 
     return {
       // variable
@@ -83,33 +131,32 @@ export default defineComponent({
       //arraykandang
       kandangs,
       kandangID,
-      chicken
-    }
+      chicken,
+    };
   },
   methods: {
     gotoReport(item: any) {
       this.$router.push({
-        path: '/report',
+        path: "/report",
         query: {
-          id: item.id
-        }
+          id: item.id,
+        },
       });
     },
-
     getKandang() {
       // Fecth data kandang
-      kandangService.getKandang(this.params)
-        .then((response: any) => {
-          this.kandangs = response
-        })
+      kandangService.getKandang(this.params).then((response: any) => {
+        this.kandangs = response;
+      });
     },
     async startScan(): Promise<void> {
+      this.$router.push({ path: "/scan-barcode" })
       if (!this.isSupported) {
         const alert = await alertController.create({
-          header: 'Device tidak didukung',
-          message: 'Perangkat tidak mendukung untuk melakukan scan QR.',
-          buttons: ['OK'],
-          mode: 'ios'
+          header: "Device tidak didukung",
+          message: "Perangkat tidak mendukung untuk melakukan scan QR.",
+          buttons: ["OK"],
+          mode: "ios",
         });
         await alert.present();
         return;
@@ -117,47 +164,36 @@ export default defineComponent({
       const granted = await this.requestPermissions();
       if (!granted) {
         const alert = await alertController.create({
-          header: 'Gagal mendapatkan ijin',
-          message: 'Pastikan untuk menginjikan penggunaan camera untuk scan QR.',
-          buttons: ['OK'],
-          mode: 'ios'
+          header: "Gagal mendapatkan ijin",
+          message:
+            "Pastikan untuk menginjikan penggunaan camera untuk scan QR.",
+          buttons: ["OK"],
+          mode: "ios",
         });
         await alert.present();
         return;
       }
+      this.$router.push({ path: "/scan-barcode" })
 
-      // // Hide all elements in the WebView
-      // document.querySelector("body")?.classList.add("barcode-scanning-active");
-
-      // // Add the `barcodeScanned` listener
-      // const listener = await BarcodeScanner.addListener(
-      //   "barcodeScanned",
-      //   async (result: any) => {
-      //     // Print the found barcode to the console
-      //     await BarcodeScanner.stopScan();
-      //     this.gotoReport({ id: result.barcode.rawValue })
-      //     console.log(result.barcode);
-      //   },
-      // );
-
-      // // Start the barcode scanner
-      // await BarcodeScanner.startScan();
-
-      const { barcodes } = await BarcodeScanner.scan()
-      console.log(barcodes)
-      this.gotoReport({ id: barcodes[0].rawValue })
+      // await BarcodeScanner.scan()
+      //   .then((barcode: any) => {
+      //     this.gotoReport({ id: barcode[0].rawValue });
+      //   })
+      //   .catch(e => this.$router.replace({ path: "/scan-barcode" }));
     },
 
     async requestPermissions(): Promise<boolean> {
       const { camera } = await BarcodeScanner.requestPermissions();
-      return camera === 'granted' || camera === 'limited';
+      return camera === "granted" || camera === "limited";
     },
   },
   ionViewWillEnter() {
-    BarcodeScanner.isSupported().then((result) => this.isSupported = result.supported);
+    BarcodeScanner.isSupported().then(
+      (result) => (this.isSupported = result.supported)
+    );
     this.getKandang();
-  }
-})
+  },
+});
 </script>
 
 <style scoped lang="scss">

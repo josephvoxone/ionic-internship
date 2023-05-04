@@ -13,8 +13,12 @@
       </ion-header>
 
       <ion-list>
+<<<<<<< HEAD
         <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLog"
         :key="index">
+=======
+        <ion-card v-for="(item, index) in dailyLog  " :key="index" mode="ios">
+>>>>>>> 6443fc91357a3649339c6edacfeb6f68437b8614
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>

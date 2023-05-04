@@ -20,6 +20,13 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/LoginPage.vue"),
   },
   {
+    path: "/scan-barcode",
+    component: () => import("@/views/ScanBarcode.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/report",
     component: () => import("@/views/ReportPage.vue"),
     meta: {

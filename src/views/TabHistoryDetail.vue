@@ -2,12 +2,9 @@
     <ion-header>
         <ion-toolbar>
             <ion-buttons slot="start">
-                <ion-button color="medium" @click="cancel">Cancel</ion-button>
+                <ion-back-button href="/tabs/history"></ion-back-button>
             </ion-buttons>
-            <ion-title class="ion-text-center">Detail</ion-title>
-            <ion-buttons slot="end">
-                <ion-button @click="confirm">Confirm</ion-button>
-            </ion-buttons>
+            <ion-title class="ion-text-center">History Detail</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
@@ -77,16 +74,22 @@
 </template>
   
 <script lang="ts">
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, modalController, useIonRouter } from '@ionic/vue';
-import { defineComponent, ref } from 'vue';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, modalController, useIonRouter, IonBackButton } from '@ionic/vue';
+import { defineComponent, ref } from "vue";
+import { useRoute } from "vue-router";
 import { chevronBackOutline } from 'ionicons/icons';
+
+// Page
+import TabHistory from "./TabHistory.vue";
+
+//Service
 import reportService from '@/common/services/report.service';
 import kandangService from '@/common/services/kandang.service';
 import dailyLogService from '@/common/services/dailylog.service';
 
 export default defineComponent({
-    name: 'Detail',
-    components: { useIonRouter, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput },
+    name: 'HistoryDetail',
+    components: { useIonRouter, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, IonBackButton },
     setup() {
         const ionRouter = useIonRouter()
         const params = ref({ type: 'all', q: '' })
@@ -107,7 +110,6 @@ export default defineComponent({
             kandangs,
             //arraydailyLog
             dailyLogs
-
         }
     },
 
@@ -143,6 +145,7 @@ export default defineComponent({
         },
 
         ionViewWillEnter() {
+            this.getDailyLog();
             this.getReport();
             this.getKandang();
         },

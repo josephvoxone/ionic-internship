@@ -34,6 +34,13 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/history-detail",
+    component: () => import("@/views/TabHistoryDetail.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/tabs/",
     component: TabsPage,
     children: [

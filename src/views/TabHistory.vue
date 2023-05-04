@@ -13,12 +13,8 @@
       </ion-header>
 
       <ion-list>
-<<<<<<< HEAD
-        <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLog"
+        <ion-card button @click="gotoDetail(item)" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLog"
         :key="index">
-=======
-        <ion-card v-for="(item, index) in dailyLog  " :key="index" mode="ios">
->>>>>>> 6443fc91357a3649339c6edacfeb6f68437b8614
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>
@@ -52,7 +48,7 @@ import { defineComponent, ref } from 'vue';
 
 // Services
 import historyService from '@/common/services/history.service';
-import dailyLogService from '@/common/services/dailylog';
+import dailyLogService from '@/common/services/dailylog.service';
 
 export default defineComponent({
   name: "TabHistory",
@@ -79,9 +75,9 @@ export default defineComponent({
     }
   },
   methods: {
-    gotoReport(item: any) {
+    gotoDetail(item: any) {
       this.$router.push({
-        path: '/report',
+        path: '/history-detail',
         query: {
           id: item.id
         }

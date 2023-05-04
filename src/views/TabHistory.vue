@@ -13,7 +13,8 @@
       </ion-header>
 
       <ion-list>
-        <ion-card v-for="(item, index) in dailyLog" :key="index" mode="ios">
+        <ion-card button @click="gotoReport(item)" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLog"
+        :key="index">
           <ion-item lines="none">
             <ion-icon slot="start" :icon="item.type == 'login' ? logIn : logOut"></ion-icon>
             <ion-label>
@@ -74,6 +75,14 @@ export default defineComponent({
     }
   },
   methods: {
+    gotoReport(item: any) {
+      this.$router.push({
+        path: '/report',
+        query: {
+          id: item.id
+        }
+      });
+    },
     getDailyLog() {
       // Fecth data history
       dailyLogService.getDailyLog(this.params)

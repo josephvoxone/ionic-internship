@@ -97,8 +97,8 @@ router.beforeEach(async (to, from, next) => {
         if (e?.response?.status === 401) {
           localStorage.clear();
         }
-        next();
       });
+    next()
   } else {
     next();
   }

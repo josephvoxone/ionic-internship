@@ -174,10 +174,15 @@ export default defineComponent({
       }
 
       await BarcodeScanner.scan()
-        .then((barcode: any) => {
-          this.gotoReport({ id: barcode[0].rawValue });
+        .then((response: any) => {
+          this.gotoReport({ id: response.barcodes[0].rawValue });
         })
-        .catch(e => this.$router.push({ path: "/scan-barcode" }));
+        .catch(e => {
+          console.error(e)
+          if (e.message === 'failed to scan code. ') {
+            this.$router.push({ path: "/scan-barcode" })
+          }
+        });
     },
 
     async requestPermissions(): Promise<boolean> {

@@ -10,7 +10,7 @@
     "test:e2e": "cypress run",
     "test:unit": "vitest",
     "lint": "eslint",
-    "generate:assets": "npx capacitor-assets generate --android --iconBackgroundColor #ffffff --iconBackgroundColorDark #ffffff --splashBackgroundColor #ffffff --splashBackgroundColorDark #ffffff",
+    "generate:assets": "npx capacitor-assets generate --android --iconBackgroundColor #ffffff --iconBackgroundColorDark #ffffff --splashBackgroundColor #ffffff --splashBackgroundColorDark #ffffff"
   },
   "dependencies": {
     "@capacitor-mlkit/barcode-scanning": "^0.0.3",

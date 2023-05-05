@@ -10,9 +10,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "default",
     redirect: "/tabs/kandang",
-    meta: {
-      requiresAuth: true,
-    },
   },
   {
     path: "/login",
@@ -40,9 +37,6 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "",
         redirect: "/tabs/kandang",
-        meta: {
-          requiresAuth: true,
-        },
       },
       {
         path: "kandang",
@@ -78,30 +72,29 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   // to and from are both route objects. must call `next`.
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
+  const token = tokenService.getToken();
 
-  // If auth isn't required for the route, just continue.
-  if (!requiresAuth) return next();
-
-  await http
-    .get(`/auth/me`)
-    .then((response) => {
-      sessionService.saveSession(response.data);
-      next();
-    })
-    .catch((e) => {
-      console.log(e);
-      // If token not available, expired or not found
-      if (e?.response?.status === 401) {
-        localStorage.clear();
-      }
-
-      next({
-        name: "login",
-        query: {
-          redirectFrom: to.fullPath,
-        },
-      });
+  if (requiresAuth && !token) {
+    next({
+      name: "login",
+      query: {
+        redirectFrom: to.fullPath,
+      },
     });
+  } else if (token) {
+    http.get(`/auth/me`, { timeout: 0 })
+      .then((response) => {
+        sessionService.saveSession(response.data)
+      })
+      .catch((e: any) => {
+        if (e?.response?.status === 401) {
+          localStorage.clear();
+        }
+        next();
+      });
+  } else {
+    next();
+  }
 });
 
 router.beforeResolve(async (to, from, next) => {

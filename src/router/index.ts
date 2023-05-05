@@ -80,7 +80,6 @@ router.beforeEach(async (to, from, next) => {
   const token = tokenService.getToken();
 
   if (requiresAuth && !token) {
-    console.log(1)
     next({
       name: "login",
       query: {
@@ -88,7 +87,6 @@ router.beforeEach(async (to, from, next) => {
       },
     });
   } else if (token) {
-    console.log(2)
     try {
       const response = await http.get(`/auth/me`, { timeout: 0 });
       sessionService.saveSession(response.data);
@@ -105,7 +103,6 @@ router.beforeEach(async (to, from, next) => {
       } else { next() }
     }
   } else {
-    console.log(3)
     next();
   }
 });

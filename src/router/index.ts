@@ -75,13 +75,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
-
 router.beforeEach(async (to, from, next) => {
-  // to and from are both route objects. must call `next`.
   const requiresAuth = to.matched.some((route) => route.meta.requiresAuth);
   const token = tokenService.getToken();
 
   if (requiresAuth && !token) {
+    console.log(1)
     next({
       name: "login",
       query: {
@@ -89,20 +88,28 @@ router.beforeEach(async (to, from, next) => {
       },
     });
   } else if (token) {
-    http.get(`/auth/me`, { timeout: 0 })
-      .then((response) => {
-        sessionService.saveSession(response.data)
-      })
-      .catch((e: any) => {
-        if (e?.response?.status === 401) {
-          localStorage.clear();
-        }
-      });
-    next()
+    console.log(2)
+    try {
+      const response = await http.get(`/auth/me`, { timeout: 0 });
+      sessionService.saveSession(response.data);
+      next();
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        localStorage.clear();
+        next({
+          name: "login",
+          query: {
+            redirectFrom: to.fullPath,
+          },
+        });
+      } else { next() }
+    }
   } else {
+    console.log(3)
     next();
   }
 });
+
 
 router.beforeResolve(async (to, from, next) => {
   // If the user is already logged in

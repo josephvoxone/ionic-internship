@@ -2,13 +2,14 @@ import controller from "@/common/api/controller.service";
 import tokenService from "@/common/api/token.service";
 import sessionService from "@/common/api/session.service";
 import axios from "axios";
+import { useIonRouter } from "@ionic/vue";
 
 const http = axios.create({
   baseURL: `${import.meta.env.VITE_APP_API}`,
   headers: {
     "Content-Type": "application/json",
   },
-  timeout: 30000, //timeout 30s
+  timeout: 7000, //timeout 7s
 });
 
 // When API request should using token

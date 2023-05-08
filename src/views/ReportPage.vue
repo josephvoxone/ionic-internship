@@ -80,8 +80,8 @@
 
       <!-- History Segment -->
       <div v-if="segment == 'history'">
-        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical" v-for="(item, index) in dailyLogs"
-          :key="index">
+        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical" v-for="(item, index) in filteredDailyLogs"
+          :key="item.id_kandang">
           <!-- Tampilkan nama kandang -->
           <ion-item lines="none">
             <ion-label>
@@ -160,6 +160,7 @@ import { useRoute } from "vue-router";
 import ReportDetail from "./ReportDetail.vue";
 import BarcodePage from "./BarcodePage.vue";
 import ReportCreate from "./ReportCreate.vue";
+import TabKandang from "./TabKandang.vue";
 
 // Services
 import reportService from "@/common/services/report.service";
@@ -167,6 +168,30 @@ import kandangService from "@/common/services/kandang.service";
 import dailyLogService from "@/common/services/dailylog.service";
 import VueApexCharts from "vue3-apexcharts";
 import { qrCode } from "ionicons/icons";
+import DailyLog from "@/common/services/dailylog.service"
+
+interface DailyLog {
+  id: number;
+  id_kandang: number;
+  id_user: number;
+  kandang: {
+    id: number,
+    name: string,
+    type: string,
+    status: true,
+    address: string,
+    city: string,
+  };
+  user: {
+    id: number,
+    name: string,
+    role: true,
+    phone: string,
+    gender: true,
+    status: true,
+  }
+  created_at: string;
+}
 
 export default defineComponent({
   name: "ReportPage",
@@ -243,6 +268,7 @@ export default defineComponent({
       series, chartOptions
     }
   },
+
   setup() {
     const segment = ref("stats");
     const ionRouter = useIonRouter();
@@ -254,6 +280,7 @@ export default defineComponent({
     const id = ref();
     const selectedKandang = ref();
     const route = useRoute();
+    // const dailyLogs: DailyLog[] = ref([]);
     id.value = route.query.id || "";
 
     return {
@@ -266,14 +293,29 @@ export default defineComponent({
       params,
       reports,
       kandang,
-      dailyLogs,
+      // dailyLogs,
       id,
       selectedKandang,
       report,
       // router
       ionRouter,
+      dailyLogs: [] as DailyLog[],
+      // dailyLogs: [] as DailyLogItem[],
     };
   },
+
+  mounted() {
+    this.getDailyLog();
+  },
+
+  computed: {
+    filteredDailyLogs() {
+      const id = Number(this.$route.query.id);
+      return this.dailyLogs.filter((item) => item.id_kandang === id);
+    },
+  },
+
+
   methods: {
     ionViewWillEnter() {
       this.getReport();
@@ -344,6 +386,7 @@ export default defineComponent({
 
       const { data } = await modal.onWillDismiss();
       if (data) { this.ionViewWillEnter() }
+
     },
 
   },

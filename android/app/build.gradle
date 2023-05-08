@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    namespace 'japfa.farmlace.id'
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "japfa.farmlace.id"

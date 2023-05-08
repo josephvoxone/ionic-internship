@@ -13,14 +13,14 @@
     "generate:assets": "npx capacitor-assets generate --android --iconBackgroundColor #ffffff --iconBackgroundColorDark #ffffff --splashBackgroundColor #ffffff --splashBackgroundColorDark #ffffff"
   },
   "dependencies": {
-    "@capacitor-mlkit/barcode-scanning": "^0.0.3",
-    "@capacitor/android": "4.8.0",
-    "@capacitor/app": "4.1.1",
-    "@capacitor/core": "4.8.0",
-    "@capacitor/haptics": "4.1.0",
-    "@capacitor/keyboard": "4.1.1",
-    "@capacitor/splash-screen": "^5.0.0",
-    "@capacitor/status-bar": "4.1.1",
+    "@capacitor-mlkit/barcode-scanning": "^5.0.0",
+    "@capacitor/android": "^5.0.1",
+    "@capacitor/app": "^5.0.1",
+    "@capacitor/core": "^5.0.1",
+    "@capacitor/haptics": "^5.0.1",
+    "@capacitor/keyboard": "^5.0.1",
+    "@capacitor/splash-screen": "^5.0.1",
+    "@capacitor/status-bar": "^5.0.1",
     "@chenfengyuan/vue-qrcode": "^2.0.0",
     "@ionic/vue": "6.7.4",
     "@ionic/vue-router": "6.7.4",
@@ -31,7 +31,7 @@
     "vue3-apexcharts": "^1.4.1"
   },
   "devDependencies": {
-    "@capacitor/cli": "4.8.0",
+    "@capacitor/cli": "^5.0.1",
     "@vitejs/plugin-legacy": "^4.0.2",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",

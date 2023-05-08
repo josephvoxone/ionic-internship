@@ -10,7 +10,7 @@
         <ion-list-header>
           <ion-label>Atur Profile</ion-label>
         </ion-list-header>
-        <ion-item button @click="popupName">
+        <ion-item id="open-modal" button @click="gotoName">
           <ion-icon slot="start" :icon="person"></ion-icon>
           <!-- <ion-label @click="$router.push('/change-name')">Change Name</ion-label> -->
           <ion-label>
@@ -18,7 +18,7 @@
             <p>Atur dan ubah nama profilemu</p>
           </ion-label>
         </ion-item>
-        <ion-item button @click="popupPW">
+        <ion-item button @click="gotoPW">
           <ion-icon slot="start" :icon="documentLock"></ion-icon>
           <!-- <ion-label @click="$router.push('/change-password')">Change Password</ion-label> -->
           <ion-label>
@@ -54,6 +54,7 @@ import { ref } from 'vue';
 export default {
   name: "TabSetting",
   components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon },
+
   setup() {
     const name = ref()
     const password = ref()
@@ -161,7 +162,28 @@ export default {
       logOut, documentLock, person
     };
   },
+  
+
   methods: {
+  //Change Name menggunakan tab baru
+  gotoName(item: any) {
+    this.$router.push({
+      path: "/change-name",
+      query: {
+        id: item.id,
+      },
+    });
   },
+
+  //Change Password menggunakan tab baru
+  gotoPW(item: any) {
+    this.$router.push({
+      path: "/change-pw",
+      query: {
+        id: item.id,
+      },
+    });
+  },
+},
 };
 </script>

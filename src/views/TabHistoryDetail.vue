@@ -1,83 +1,74 @@
 <template>
+    <ion-page>
     <ion-header>
         <ion-toolbar>
+            <ion-title class="ion-text-center">History Detail</ion-title>
             <ion-buttons slot="start">
                 <ion-back-button href="/tabs/history"></ion-back-button>
             </ion-buttons>
-            <ion-title class="ion-text-center">History Detail</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
         <ion-item lines="none">
-            <ion-avatar slot="start">
+            <ion-avatar class="img-profile">
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label v-for="(item, index) in kandangs" :key="index">
-                <h2>
-                    {{item.name}}
-                </h2>
-                <p>{{item.city}}</p>
-            </ion-label>
         </ion-item>
+        <ion-label class="ion-text-center">
+            <b><p>
+                Andara
+            </p></b>
+            <p>
+                PPL 02
+            </p>
+        </ion-label>
         <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
         <ion-item lines="none">
-            <ion-label v-for="(item, index) in reports" :key="index">
-                <h2>
-                    Reason
-                </h2>
-                <p>{{ item.reason }}</p>
-            </ion-label>
-        </ion-item>
-        <ion-item lines="none">
+            <ion-icon slot="start" :icon="calendarOutline"></ion-icon>
+            <ion-grid>
             <ion-label>
-                <h2>
-                    Reason
-                </h2>
+                <b><p>Check In</p></b>
+                <p>8 May 2023 - 09.00</p>
+            </ion-label>
+            </ion-grid>
+            </ion-item>
+            <ion-label>
                 <ion-grid>
-                    <ion-row>
+                <ion-row>
                         <ion-col>
-                            <p>Depletion</p>
+                            <b><p>Kandang</p></b>
                         </ion-col>
                         <ion-col>
-                            <p style="margin-left:auto">30</p>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col>
-                            <p>Feed Intake</p>
-                        </ion-col>
-                        <ion-col>
-                            <p style="margin-left:auto">30</p>
+                            <p style="margin-left:auto">Make a new report</p>
                         </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <p>Avg bw</p>
+                            <b><p>ID Kandang</p></b>
                         </ion-col>
                         <ion-col>
-                            <p style="margin-left:auto">30</p>
+                            <p style="margin-left:auto">Make a new report</p>
                         </ion-col>
                     </ion-row>
-                </ion-grid>
+                    <ion-row>
+                        <ion-col>
+                            <b><p>Address Kandang</p></b>
+                        </ion-col>
+                        <ion-col>
+                            <p style="margin-left:auto">Make a new report</p>
+                        </ion-col>
+                    </ion-row>
+            </ion-grid>
             </ion-label>
-        </ion-item>
-        <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
-        <ion-item lines="none">
-            <ion-label>
-                <p>100012103</p>
-            </ion-label>
-            <ion-label slot="end">
-                <p>21 Maret 2023</p>
-            </ion-label>
-        </ion-item>
     </ion-content>
+</ion-page>
 </template>
   
 <script lang="ts">
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, modalController, useIonRouter, IonBackButton } from '@ionic/vue';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, modalController, useIonRouter, IonBackButton, IonIcon, IonAvatar, IonGrid, IonRow, IonCol, IonPage } from '@ionic/vue';
 import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
-import { chevronBackOutline } from 'ionicons/icons';
+import { chevronBackOutline, calendarOutline } from 'ionicons/icons';
 
 // Page
 import TabHistory from "./TabHistory.vue";
@@ -89,7 +80,7 @@ import dailyLogService from '@/common/services/dailylog.service';
 
 export default defineComponent({
     name: 'HistoryDetail',
-    components: { useIonRouter, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, IonBackButton },
+    components: { useIonRouter, IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonButton, IonItem, IonLabel, IonInput, IonBackButton, IonIcon, IonAvatar, IonGrid, IonRow, IonCol, IonPage },
     setup() {
         const ionRouter = useIonRouter()
         const params = ref({ type: 'all', q: '' })
@@ -109,7 +100,8 @@ export default defineComponent({
             //arraykandang
             kandangs,
             //arraydailyLog
-            dailyLogs
+            dailyLogs,
+            calendarOutline
         }
     },
 
@@ -160,3 +152,14 @@ export default defineComponent({
     },
 });
 </script>
+
+<style scoped lang="scss">
+.img-profile {
+    width: 20%;
+    height: 90%;
+    margin: auto;
+}
+.ion-padding {
+    border-radius: 50%;
+}
+</style>

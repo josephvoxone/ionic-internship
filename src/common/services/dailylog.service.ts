@@ -8,6 +8,12 @@ class DailyLogService {
             .catch(error => { throw error })
     }
 
+    getDetailbyID(id: any) {
+        return http.get(`/daily_log/${id}`)
+            .then((res) => res.data)
+            .catch(error => { throw error })
+    }
+
     addPromo(params: any) {
         return http.post(`/example`, params)
             .then(response => response.data.data)

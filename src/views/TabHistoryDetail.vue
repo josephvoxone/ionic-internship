@@ -8,20 +8,20 @@
                 </ion-buttons>
             </ion-toolbar>
         </ion-header>
-        <ion-content class="ion-padding" >
+        <ion-content class="ion-padding" v-for="(item, index) in dailyLogs" :key="index">
             <ion-item lines="none">
                 <ion-avatar class="img-profile">
-                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg"/>
+                    <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
                 </ion-avatar>
             </ion-item>
             <ion-label class="ion-text-center">
                 <b>
                     <p>
-                        Andara
+                        {{ item.name }}
                     </p>
                 </b>
                 <p>
-                    PPL 02
+                    PPL {{ item.id_user }}
                 </p>
             </ion-label>
             <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
@@ -84,8 +84,6 @@ import { chevronBackOutline, calendarOutline } from 'ionicons/icons';
 import TabHistory from "./TabHistory.vue";
 
 //Service
-import reportService from '@/common/services/report.service';
-import kandangService from '@/common/services/kandang.service';
 import dailyLogService from '@/common/services/dailylog.service';
 
 export default defineComponent({
@@ -97,6 +95,9 @@ export default defineComponent({
         const reports: any = ref([])
         const kandangs: any = ref([])
         const dailyLogs: any = ref([])
+        const id = ref();
+        const route = useRoute();
+        id.value = route.query.id || "";
 
         return {
             chevronBackOutline,
@@ -111,45 +112,22 @@ export default defineComponent({
             kandangs,
             //arraydailyLog
             dailyLogs,
-            calendarOutline
+            calendarOutline,
+            id,
+            route
         }
     },
 
     methods: {
-        getReport() {
-            // Fecth data Report
-            reportService.getReport(this.params)
-                .then((response: any) => {
-                    console.log(response)
-                    this.reports = response
-                    console.log(this.reports)
-                })
-        },
-
-        getKandang() {
-            // Fecth data kandang
-            kandangService.getKandang(this.params)
-                .then((response: any) => {
-                    console.log(response)
-                    this.kandangs = response
-                    console.log(this.kandangs)
-                })
-        },
-
-        getDailyLog(id: string) {
-            // Fetch data dailyLog with id filter
-            dailyLogService.getDailyLog({ id: id })
-                .then((response: any) => {
-                    console.log(response);
-                    this.dailyLogs = response;
-                    console.log(this.dailyLogs);
-                })
+        getDailyLog() {
+            console.log(this.id)
+            dailyLogService.getDetailbyID(this.id).then((response: any) => {
+                this.dailyLogs = response;
+            });
         },
 
         ionViewWillEnter() {
-            this.getDailyLog('id');
-            this.getReport();
-            this.getKandang();
+            this.getDailyLog();
         },
 
         cancel() {
@@ -163,7 +141,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">.img-profile {
+<style scoped lang="scss">
+.img-profile {
     width: 20%;
     height: 90%;
     margin: auto;
@@ -171,4 +150,5 @@ export default defineComponent({
 
 .ion-padding {
     border-radius: 50%;
-}</style>
+}
+</style>

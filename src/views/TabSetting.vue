@@ -44,16 +44,20 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, useIonRouter, IonInput } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, useIonRouter, IonInput, modalController } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
+
+import ChangeNamePage from "./ChangeNamePage.vue";
+import ChangePasswordPage from "./ChangePasswordPage.vue";
+
 // Services
 import KaryawanService from '@/common/services/karyawan.service';
 import { ref } from 'vue';
 
 export default {
   name: "TabSetting",
-  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, IonInput },
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, IonInput, modalController },
 
   setup() {
     const name = ref()
@@ -162,28 +166,33 @@ export default {
       logOut, documentLock, person
     };
   },
-  
+
 
   methods: {
-  //Change Name menggunakan tab baru
-  gotoName(item: any) {
-    this.$router.push({
-      path: "/change-name",
-      query: {
-        id: item.id,
-      },
-    });
-  },
+    ionViewWillEnter() {
+    },
 
-  //Change Password menggunakan tab baru
-  gotoPW(item: any) {
-    this.$router.push({
-      path: "/change-pw",
-      query: {
-        id: item.id,
-      },
-    });
+    //Change Name menggunakan tab baru
+    async gotoName(identity: any) {
+      const modal = await modalController.create({
+        component: ChangeNamePage,
+        breakpoints: [0, 0.5, 0.7],
+        initialBreakpoint: 0.5,
+        componentProps: { id: identity }
+      });
+      modal.present();
+    },
+
+    //Change Password menggunakan tab baru
+    async gotoPW(identity: any) {
+      const modal = await modalController.create({
+        component: ChangePasswordPage,
+        breakpoints: [0, 0.5, 0.7],
+        initialBreakpoint: 0.5,
+        componentProps: { id: identity }
+      });
+      modal.present();
+    },
   },
-},
 };
 </script>

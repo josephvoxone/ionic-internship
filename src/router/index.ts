@@ -38,6 +38,20 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: "/change-name",
+    component: () => import("@/views/ChangeNamePage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
+    path: "/change-pw",
+    component: () => import("@/views/ChangePasswordPage.vue"),
+    meta: {
+      requiresAuth: true,
+    },
+  },
+  {
     path: "/tabs/",
     component: TabsPage,
     children: [
@@ -52,7 +66,6 @@ const routes: Array<RouteRecordRaw> = [
           requiresAuth: true,
         },
       },
-
       {
         path: "history",
         component: () => import("@/views/TabHistory.vue"),

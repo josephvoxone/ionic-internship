@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, useIonRouter } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, useIonRouter, IonInput } from '@ionic/vue';
 import { alertController } from '@ionic/vue';
 import { documentLock, logOut, person } from 'ionicons/icons';
 // Services
@@ -53,7 +53,7 @@ import { ref } from 'vue';
 
 export default {
   name: "TabSetting",
-  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon },
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonLabel, IonList, IonItem, IonListHeader, IonIcon, IonInput },
 
   setup() {
     const name = ref()

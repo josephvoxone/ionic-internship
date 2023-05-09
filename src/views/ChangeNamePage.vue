@@ -1,53 +1,49 @@
 <template>
-    <ion-page>
-        <ion-header class="ion-no-border">
-            <ion-toolbar ref="modal" trigger="open-modal" :can-confirm="canConfirm" :presenting-element="presentingElement">
-                <ion-title>Change Name</ion-title>
-                <ion-buttons slot="start" color="light">
-                    <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-buttons slot="end">
-              <ion-button @click="confirm()">Close</ion-button>
-            </ion-buttons>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <div class="container">
-                <ion-item fill="outline" class="ion-margin-bottom">
-                    <ion-label position="stacked">Name</ion-label>
-                    <ion-input type="name" placeholder="Masukkan namamu" v-model="user.name"></ion-input>
-                </ion-item>
-            </div>
-        </ion-content>
-    </ion-page>
+  <ion-page :can-dismiss="canDismiss" :presenting-element="presentingElement">
+    <ion-content :fullscreen="true">
+      <div class="block">
+        <ion-list-header class="ion-no-padding">
+          <ion-label class="ion-margin-top ion-text-center">
+            <h2>Change Name</h2>
+            <p>Masukkan nama yang diinginkan di bawah sini!</p>
+          </ion-label>
+        </ion-list-header>
+        <div>
+          <ion-item fill="outline" class="ion-margin-bottom">
+            <ion-label position="stacked">New Name</ion-label>
+            <ion-input type="name" placeholder="Enter nama barumu" v-model="user.name"></ion-input>
+          </ion-item>
+        </div>
+        <div>
+          <ion-toolbar class="ion-padding">
+            <ion-button mode="ios" color="dark" fill="solid" shape="round" expand="block" @click="canDismiss()">Save
+            </ion-button>
+          </ion-toolbar>
+        </div>
+      </div>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script  lang="ts">
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonButtons, IonButton, IonModal, actionSheetController } from '@ionic/vue';
-import { barChart } from 'ionicons/icons';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonButton, actionSheetController, IonModal } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
-import VueQrcode from '@chenfengyuan/vue-qrcode';
-import TabSetting from '@/views/TabSetting.vue';
 
 export default defineComponent({
-    name: "NamePage",
-    props: ["id"],
-    components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, VueQrcode, IonButtons, IonButton, IonModal },
-    setup() {
-        const user: any = ref({})
-        return {
-            barChart,
-            user,
-            confirm
-        }
-    },
-    data() {
-      return {
-        presentingElement: undefined,
-      };
-    },
-    methods: {
-      async canConfirm() {
+  name: "ChangeNamePage",
+  props: ["id"],
+  components: { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonListHeader, IonList, IonItem, IonLabel, IonButton, actionSheetController, IonModal },
+
+  setup() {
+    const user: any = ref({})
+    return {
+      user,
+      presentingElement: undefined
+    }
+  },
+
+  methods: {
+      async canDismiss() {
         const actionSheet = await actionSheetController.create({
           header: 'Are you sure?',
           buttons: [
@@ -63,7 +59,7 @@ export default defineComponent({
         });
         actionSheet.present();
         const { role } = await actionSheet.onWillDismiss();
-        return role === 'confirm';
+        return role === 'confirm' ? history.back() : null;
       },
     },
     mounted() {
@@ -72,10 +68,29 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.container {
+.block {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.block {
+  display: inline-block;
+  font-size: 0;
+  margin-bottom: 0;
+  position: relative;
+}
+
+.block {
+    width: 100%;
+    height: 300px;
     display: flex;
-    justify-content: center;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
+  }
+
+  ion-page {
+    --height: auto;
 }
 </style>

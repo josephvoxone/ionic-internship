@@ -87,7 +87,7 @@ import karyawanService from '@/common/services/karyawan.service';
 import Report from "@/common/services/report.service"
 
 interface Report {
-    id: 5,
+    id: number,
     reason: string,
     id_kandang: number,
     depletion: number,

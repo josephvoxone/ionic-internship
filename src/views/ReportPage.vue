@@ -106,7 +106,7 @@
             <ion-label>
               <p>Last updated</p>
             </ion-label>
-            <ion-button @click="gotoDetail(item.id)" :key="item.id" slot="end" color="dark"> See Detail </ion-button>
+            <ion-button button @click="gotoDetail(item)" :key="item" slot="end" color="dark"> See Detail </ion-button>
           </ion-item>
         </ion-card>
       </div>

@@ -15,16 +15,16 @@
             <ion-avatar slot="start">
                 <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
             </ion-avatar>
-            <ion-label v-for="(item, index) in kandangs" :key="index">
+            <ion-label v-for="(item) in filteredReports">
                 <h2>
-                    {{item.name}}
+                    {{ item.user_created.name }}
                 </h2>
-                <p>{{item.city}}</p>
+                <p>{{ item.kandang.city }}</p>
             </ion-label>
         </ion-item>
         <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
         <ion-item lines="none">
-            <ion-label v-for="(item, index) in reports" :key="index">
+            <ion-label v-for="(item) in filteredReports">
                 <h2>
                     Reason
                 </h2>
@@ -32,7 +32,7 @@
             </ion-label>
         </ion-item>
         <ion-item lines="none">
-            <ion-label>
+            <ion-label v-for="(item) in filteredReports">
                 <h2>
                     Reason
                 </h2>
@@ -42,7 +42,7 @@
                             <p>Depletion</p>
                         </ion-col>
                         <ion-col>
-                            <p style="margin-left:auto">30</p>
+                            <p style="margin-left:auto">{{ item.depletion }}</p>
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -50,7 +50,7 @@
                             <p>Feed Intake</p>
                         </ion-col>
                         <ion-col>
-                            <p style="margin-left:auto">30</p>
+                            <p style="margin-left:auto">{{ item.feed_intake }}</p>
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -58,19 +58,19 @@
                             <p>Avg bw</p>
                         </ion-col>
                         <ion-col>
-                            <p style="margin-left:auto">30</p>
+                            <p style="margin-left:auto">{{ item.avg_bw }}</p>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
             </ion-label>
         </ion-item>
         <div style="width: 100%; border-top: 1px solid #d4d4d4; margin: 8px 0;"></div>
-        <ion-item lines="none">
+        <ion-item lines="none" v-for="(item) in filteredReports">
             <ion-label>
-                <p>100012103</p>
+                <p>{{ item.kandang.id }}</p>
             </ion-label>
             <ion-label slot="end">
-                <p>21 Maret 2023</p>
+                <p>{{ item.create_at }}</p>
             </ion-label>
         </ion-item>
     </ion-content>
@@ -83,6 +83,49 @@ import { chevronBackOutline } from 'ionicons/icons';
 import reportService from '@/common/services/report.service';
 import kandangService from '@/common/services/kandang.service';
 import dailyLogService from '@/common/services/dailylog.service';
+import karyawanService from '@/common/services/karyawan.service';
+import Report from "@/common/services/report.service"
+
+interface Report {
+    id: 5,
+    reason: string,
+    id_kandang: number,
+    depletion: number,
+    feed_intake: number,
+    avg_bw: number,
+    created_by: number,
+    updated_by: number,
+    create_at: number,
+    updated_at: number
+    user_created: {
+        id: number,
+        name: string,
+        role: true,
+        phone: string,
+        gender: true,
+        status: true,
+        create_at: number,
+        updated_at: number
+    },
+    user_updated: {
+        id: number,
+        name: string,
+        role: true,
+        phone: string,
+        gender: true,
+        status: true,
+        create_at: number,
+        updated_at: number
+    },
+    kandang: {
+        id: number,
+        name: string,
+        type: string,
+        status: true,
+        address: string,
+        city: string,
+    };
+}
 
 export default defineComponent({
     name: 'Detail',
@@ -93,6 +136,7 @@ export default defineComponent({
         const reports: any = ref([])
         const kandangs: any = ref([])
         const dailyLogs: any = ref([])
+        const karyawans: any = ref([])
 
         return {
             chevronBackOutline,
@@ -102,13 +146,20 @@ export default defineComponent({
             // router
             ionRouter,
             //arrayreport
-            reports,
+            reports: [] as Report[],
             //arraykandang
             kandangs,
             //arraydailyLog
-            dailyLogs
-
+            dailyLogs,
+            karyawans,
         }
+    },
+
+    computed: {
+        filteredReports() {
+            const id = Number(this.$route.query.id);
+            return this.reports.filter((item) => item.id_kandang === id);
+        },
     },
 
     methods: {
@@ -142,9 +193,20 @@ export default defineComponent({
                 })
         },
 
+        getKaryawan() {
+            // Fecth data KaryawangetKaryawan
+            karyawanService.getKaryawan(this.params)
+                .then((response: any) => {
+                    console.log(response)
+                    this.karyawans = response
+                    console.log(this.karyawans)
+                })
+        },
+
         ionViewWillEnter() {
             this.getReport();
             this.getKandang();
+            this.getKaryawan();
         },
 
         cancel() {

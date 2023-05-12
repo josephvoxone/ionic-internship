@@ -80,7 +80,7 @@
 
       <!-- History Segment -->
       <div v-if="segment == 'history'">
-        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical" v-for="(item, index) in filteredDailyLogs"
+        <ion-card button @click="openDetail" mode="ios" class="ion-padding-vertical" v-for="(item) in filteredDailyLogs"
           :key="item.id_kandang">
           <!-- Tampilkan nama kandang -->
           <ion-item lines="none">
@@ -106,7 +106,7 @@
             <ion-label>
               <p>Last updated</p>
             </ion-label>
-            <ion-button slot="end" color="dark"> See Detail </ion-button>
+            <ion-button @click="gotoDetail(item.id)" :key="item.id" slot="end" color="dark"> See Detail </ion-button>
           </ion-item>
         </ion-card>
       </div>
@@ -317,6 +317,15 @@ export default defineComponent({
 
 
   methods: {
+    gotoDetail(item: any) {
+      this.$router.push({
+        path: "/detail",
+        query: {
+          id: item.id_kandang,
+        },
+      });
+    },
+
     ionViewWillEnter() {
       this.getReport();
       this.getKandang();
@@ -336,9 +345,12 @@ export default defineComponent({
       this.segment = ev.detail.value;
     },
 
-    async openDetail() {
+    async openDetail(item: any) {
       const detail = await modalController.create({
         component: ReportDetail,
+        query: {
+          id: item.id,
+        },
       });
       detail.present();
 
